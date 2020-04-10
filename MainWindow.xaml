@@ -1,0 +1,69 @@
+﻿<Window x:Class="CrosswordGenerator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CrosswordGenerator"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        FontFamily="{StaticResource OpenSans}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <TextBox x:Name="WordsTextBox"
+                 Grid.Row="0"
+                 Grid.Column="0"
+                 Margin="8"
+                 AcceptsReturn="True">
+            нектарин
+            авокадо
+            айва
+            апельсин
+            арахис
+            арбуз
+            баклажан
+            банан
+            виноград
+            голубика
+            гранат
+            груша
+            ежевика
+            кешью
+            киви
+            малина
+            манго
+            огурец
+            помидор
+            сельдерей
+            слива
+            сухофрукты
+            фундук
+            яблоко
+        </TextBox>
+        
+        <Button x:Name="GenerateButton"
+                Click="GenerateButton_Click"
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="8"
+                Style="{StaticResource PrimaryButton}">
+            Generate
+        </Button>
+
+        <Image x:Name="OutputImage"
+                   Grid.Row="0"
+                   Grid.Column="1"
+                   Grid.RowSpan="2"
+                   Margin="8">
+            
+        </Image>
+    </Grid>
+</Window>
