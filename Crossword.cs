@@ -33,6 +33,20 @@ namespace CrosswordApp
         public string name;
         public List<(string word, string definition)> words;
         public List<Placement> placements;
+        public (int x, int y) Size
+        {
+            get
+            {
+                var maxX = int.MinValue;
+                var maxY = int.MinValue;
+                foreach (var placement in placements)
+                {
+                    maxX = Math.Max(placement.x + placement.Width, maxX);
+                    maxY = Math.Max(placement.y + placement.Height, maxY);
+                }
+                return (maxX, maxY);
+            }
+        }
 
         public string GetDefinitionsString()
         {
@@ -63,14 +77,7 @@ namespace CrosswordApp
 
         public Bitmap ToImage(bool fillWithWords = true, int cellSize = 48)
         {
-            var maxX = int.MinValue;
-            var maxY = int.MinValue;
-            foreach (var placement in placements)
-            {
-                maxX = Math.Max(placement.x + placement.Width, maxX);
-                maxY = Math.Max(placement.y + placement.Height, maxY);
-            }
-            var (sizeX, sizeY) = (maxX, maxY);
+            var (sizeX, sizeY) = Size;
 
             var result = new Bitmap(sizeX * cellSize + 2, sizeY * cellSize + 2);
 

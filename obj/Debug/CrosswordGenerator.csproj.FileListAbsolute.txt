@@ -25,3 +25,4 @@ C:\Users\kbga5\source\repos\CrosswordGenerator\obj\Debug\Generation\CrosswordPag
 C:\Users\kbga5\source\repos\CrosswordGenerator\obj\Debug\Generation\WordAndDefinition.baml
 C:\Users\kbga5\source\repos\CrosswordGenerator\obj\Debug\Generation\WordsPage.baml
 C:\Users\kbga5\source\repos\CrosswordGenerator\obj\Debug\Generation\WordsAndDefinitions.baml
+C:\Users\kbga5\source\repos\CrosswordGenerator\obj\Debug\CrosswordGenerator.csprojAssemblyReference.cache
