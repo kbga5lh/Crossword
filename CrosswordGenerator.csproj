@@ -60,19 +60,19 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Crossword.cs" />
-    <Compile Include="CrosswordPage.xaml.cs">
+    <Compile Include="Generation\CrosswordPage.xaml.cs">
       <DependentUpon>CrosswordPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WordAndDefinition.xaml.cs">
+    <Compile Include="Generation\WordAndDefinition.xaml.cs">
       <DependentUpon>WordAndDefinition.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WordsPage.xaml.cs">
+    <Compile Include="Generation\WordsPage.xaml.cs">
       <DependentUpon>WordsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WordsAndDefinitions.xaml.cs">
+    <Compile Include="Generation\WordsAndDefinitions.xaml.cs">
       <DependentUpon>WordsAndDefinitions.xaml</DependentUpon>
     </Compile>
-    <Page Include="CrosswordPage.xaml">
+    <Page Include="Generation\CrosswordPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -89,14 +89,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="WordAndDefinition.xaml">
+    <Page Include="Generation\WordAndDefinition.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WordsPage.xaml">
+    <Page Include="Generation\WordsPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="WordsAndDefinitions.xaml" />
+    <Page Include="Generation\WordsAndDefinitions.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

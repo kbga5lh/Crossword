@@ -19,8 +19,10 @@ namespace CrosswordApp
 
         public Crossword Generate()
         {
-            var result = new Crossword();
-            result.name = "Crossword";
+            var result = new Crossword
+            {
+                name = "Crossword"
+            };
 
             Shuffle(Words);
 
@@ -74,7 +76,7 @@ namespace CrosswordApp
             if (words.FindIndex(v => v.isPlaced == false) < 0)
                 return true;
 
-            for (var wordIndex = 0; wordIndex < this.Words.Count; ++wordIndex)
+            for (var wordIndex = 0; wordIndex < Words.Count; ++wordIndex)
             {
                 if (words[wordIndex].isPlaced)
                     continue;

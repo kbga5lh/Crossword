@@ -49,7 +49,7 @@
                     Style="{StaticResource PrimaryButton}"
                     Foreground="White"
                     Click="GenerateButton_Click">
-            Сгенерировать кроссворд
+            Сгенерировать еще раз
         </Button>
 
         <Button x:Name="SaveButton"
