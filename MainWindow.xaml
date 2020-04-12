@@ -5,65 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CrosswordGenerator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        FontFamily="{StaticResource OpenSans}">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        
-        <TextBox x:Name="WordsTextBox"
-                 Grid.Row="0"
-                 Grid.Column="0"
-                 Margin="8"
-                 AcceptsReturn="True">
-            нектарин
-            авокадо
-            айва
-            апельсин
-            арахис
-            арбуз
-            баклажан
-            банан
-            виноград
-            голубика
-            гранат
-            груша
-            ежевика
-            кешью
-            киви
-            малина
-            манго
-            огурец
-            помидор
-            сельдерей
-            слива
-            сухофрукты
-            фундук
-            яблоко
-        </TextBox>
-        
-        <Button x:Name="GenerateButton"
-                Click="GenerateButton_Click"
-                Grid.Row="1"
-                Grid.Column="0"
-                Margin="8"
-                Style="{StaticResource PrimaryButton}">
-            Generate
-        </Button>
-
-        <Image x:Name="OutputImage"
-                   Grid.Row="0"
-                   Grid.Column="1"
-                   Grid.RowSpan="2"
-                   Margin="8">
-            
-        </Image>
-    </Grid>
+        Title="MainWindow"
+        Width="900"
+        Height="750"
+        FontFamily="{StaticResource Montserrat}">
+        <local:Words>
+                
+        </local:Words>
 </Window>
