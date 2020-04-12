@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,12 +40,6 @@ namespace CrosswordApp
             };
 
             Generate();
-
-            OutputTextBox.Text += "По горизонтали:\n\n";
-            foreach (var v in words)
-            {
-                OutputTextBox.Text += $"?) {v.definition}\n\n";
-            }
         }
 
         void Generate()
@@ -64,6 +59,11 @@ namespace CrosswordApp
             OutputImage.Height = image.Height / 2;
 
             MessageBox.Show($"generationTime: {generationTime}\ndrawingTime: {drawingTime}");
+
+            OutputTextBox.Text = crossword.GetDefinitionsString();
+
+            File.WriteAllText("crossword.json", Newtonsoft.Json.JsonConvert.SerializeObject(crossword,
+                new Newtonsoft.Json.JsonSerializerSettings() { }));
         }
 
         private void GenerateButton_Click(object sender, RoutedEventArgs e)

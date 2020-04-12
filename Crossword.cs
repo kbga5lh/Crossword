@@ -22,14 +22,44 @@ namespace CrosswordApp
             public int wordLength;
             public bool isVertical;
 
+            [Newtonsoft.Json.JsonIgnore]
             public int Width => isVertical ? 1 : wordLength;
+            [Newtonsoft.Json.JsonIgnore]
             public int Height => isVertical ? wordLength : 1;
+            [Newtonsoft.Json.JsonIgnore]
             public Rect Rect => new Rect(x, y, Width, Height);
         }
 
         public string name;
         public List<(string word, string definition)> words;
         public List<Placement> placements;
+
+        public string GetDefinitionsString()
+        {
+            var result = string.Empty;
+
+            result += "По горизонтали:\n\n";
+
+            for (var i = 0; i < placements.Count; ++i)
+            {
+                if (!placements[i].isVertical)
+                {
+                    result += $"{placements[i].index} - {words[placements[i].wordIndex].definition}\n\n";
+                }
+            }
+
+            result += "По вертикали:\n\n";
+
+            for (var i = 0; i < placements.Count; ++i)
+            {
+                if (placements[i].isVertical)
+                {
+                    result += $"{placements[i].index} - {words[placements[i].wordIndex].definition}\n\n";
+                }
+            }
+
+            return result;
+        }
 
         public Bitmap ToImage(bool fillWithWords = true, int cellSize = 48)
         {
