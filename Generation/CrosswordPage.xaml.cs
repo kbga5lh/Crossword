@@ -23,8 +23,6 @@ namespace CrosswordApp
     /// </summary>
     public partial class CrosswordPage : Page
     {
-        List<(string word, string definition)> words;
-
         CrosswordGenerator crosswordGenerator;
 
         Crossword crossword;
@@ -33,13 +31,12 @@ namespace CrosswordApp
         {
             InitializeComponent();
 
-            this.words = words;
-            for (int i = 0; i < this.words.Count; ++i)
-                this.words[i] = (this.words[i].word.ToLower(), this.words[i].definition);
+            for (int i = 0; i < words.Count; ++i)
+                words[i] = (words[i].word.ToLower().Trim(), words[i].definition);
 
             crosswordGenerator = new CrosswordGenerator
             {
-                Words = this.words,
+                Words = words,
             };
 
             Generate();
@@ -53,10 +50,19 @@ namespace CrosswordApp
             sw.Stop();
             var generationTime = sw.Elapsed;
 
-            //MessageBox.Show($"generationTime: {generationTime}");
+            crossword.placements.Sort((v1, v2) => v2.index > v1.index ? -1 : 1);
 
+            FillGrid();
+
+            OutputTextBox.Text = crossword.GetDefinitionsString();
+
+            File.WriteAllText("crossword.json", Newtonsoft.Json.JsonConvert.SerializeObject(crossword,
+                new Newtonsoft.Json.JsonSerializerSettings() { }));
+        }
+
+        void FillGrid(int cellSize = 24)
+        {
             var size = crossword.Size;
-            var cellSize = 24;
 
             CrosswordGrid.Children.Clear();
             CrosswordGrid.RowDefinitions.Clear();
@@ -69,17 +75,6 @@ namespace CrosswordApp
             var cells = new bool[size.x, size.y];
             foreach (var placement in crossword.placements)
             {
-                var b = new TextBlock
-                {
-                    Text = placement.index.ToString(),
-                    VerticalAlignment = VerticalAlignment.Top,
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    FontSize = 7
-                };
-                b.SetValue(Grid.RowProperty, placement.y);
-                b.SetValue(Grid.ColumnProperty, placement.x);
-                CrosswordGrid.Children.Add(b);
-
                 for (int i = 0; i < placement.Width; ++i)
                 {
                     for (int j = 0; j < placement.Height; ++j)
@@ -91,7 +86,7 @@ namespace CrosswordApp
                         var c = new Border
                         {
                             Background = Brushes.White,
-                            BorderThickness = new Thickness(0.5),
+                            BorderThickness = new Thickness(0.1),
                             BorderBrush = Brushes.Black,
                         };
                         c.SetValue(Grid.RowProperty, pos.y);
@@ -111,12 +106,18 @@ namespace CrosswordApp
                         cells[pos.x, pos.y] = true;
                     }
                 }
+
+                var b = new TextBlock
+                {
+                    Text = placement.index.ToString(),
+                    VerticalAlignment = VerticalAlignment.Top,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    FontSize = 7
+                };
+                b.SetValue(Grid.RowProperty, placement.y);
+                b.SetValue(Grid.ColumnProperty, placement.x);
+                CrosswordGrid.Children.Add(b);
             }
-
-            OutputTextBox.Text = crossword.GetDefinitionsString();
-
-            File.WriteAllText("crossword.json", Newtonsoft.Json.JsonConvert.SerializeObject(crossword,
-                new Newtonsoft.Json.JsonSerializerSettings() { }));
         }
 
         private void GenerateButton_Click(object sender, RoutedEventArgs e)
@@ -128,6 +129,7 @@ namespace CrosswordApp
         {
             var a = new SaveFileDialog
             {
+                FileName = "crossword",
                 Filter = "Bitmap Image (.bmp)|*.bmp|Gif Image (.gif)|*.gif|JPEG Image (.jpeg)|*.jpeg|Png Image (.png)|*.png|Tiff Image (.tiff)|*.tiff|Wmf Image (.wmf)|*.wmf"
             };
             if (a.ShowDialog() != true)

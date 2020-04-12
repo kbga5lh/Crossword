@@ -53,12 +53,13 @@ namespace CrosswordApp
             int i = 1;
             foreach (var placement in wordPlacements)
             {
+                var samePlacementPos = result.placements.FindIndex(v => v.x == placement.x - minX && v.y == placement.y - minY);
                 var p = new Crossword.Placement
                 {
                     x = placement.x - minX,
                     y = placement.y - minY,
                     isVertical = placement.isVertical,
-                    index = i++
+                    index = samePlacementPos >= 0 ? (result.placements[samePlacementPos].index) : i++,
                 };
 
                 result.words.Add(Words[placement.wordIndex]);
