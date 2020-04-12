@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -69,6 +70,22 @@ namespace CrosswordApp
         private void GenerateButton_Click(object sender, RoutedEventArgs e)
         {
             Generate();
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            var a = new SaveFileDialog();
+            a.Filter = "Bitmap Image (.bmp)|*.bmp|Gif Image (.gif)|*.gif|JPEG Image (.jpeg)|*.jpeg|Png Image (.png)|*.png|Tiff Image (.tiff)|*.tiff|Wmf Image (.wmf)|*.wmf";
+            if (a.ShowDialog() != true)
+                return;
+
+            string filePath = a.FileName;
+            JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+
+            encoder.Frames.Add(BitmapFrame.Create((BitmapImage)OutputImage.Source));
+
+            using (var filestream = new FileStream(filePath, FileMode.Create))
+                encoder.Save(filestream);
         }
     }
 }

@@ -39,18 +39,27 @@
                  Height="Auto"
                  BorderThickness="0"
                  Padding="8">
-            
+
         </TextBox>
 
         <Button x:Name="GenerateButton"
-                    Margin="0 8 0 0"
+                    Margin="0 8 8 0"
                     Grid.Row="1"
-                Grid.ColumnSpan="2"
                     HorizontalAlignment="Stretch"
                     Style="{StaticResource PrimaryButton}"
                     Foreground="White"
                     Click="GenerateButton_Click">
             Сгенерировать кроссворд
+        </Button>
+
+        <Button x:Name="SaveButton"
+                    Margin="8 8 0 0"
+                    Grid.Row="1"
+                Grid.Column="2"
+                    HorizontalAlignment="Stretch"
+                    Style="{StaticResource SecondaryButton}"
+                    Click="SaveButton_Click">
+            Сохранить изображение
         </Button>
     </Grid>
 </Page>

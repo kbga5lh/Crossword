@@ -76,7 +76,7 @@ namespace CrosswordApp
 
             for (var x = 0; x < sizeX * cellSize + 2; ++x)
                 for (var y = 0; y < sizeY * cellSize + 2; ++y)
-                    result.SetPixel(x, y, Color.FromArgb(245, 245, 245));
+                    result.SetPixel(x, y, Color.FromArgb(10, 10, 10));
 
             foreach (var placement in placements)
             {
@@ -104,29 +104,12 @@ namespace CrosswordApp
 
         static void DrawCell(int cellSize, Bitmap result, int x, int y)
         {
-            for (var i = 0; i < cellSize; ++i)
+            for (var i = 1; i < cellSize - 1; ++i)
             {
-                for (var j = 0; j < cellSize; ++j)
+                for (var j = 1; j < cellSize - 1; ++j)
                 {
                     result.SetPixel(1 + x * cellSize + i, 1 + y * cellSize + j,
                         Color.FromArgb(255, 255, 255));
-                }
-            }
-            for (var i = -1; i <= cellSize; ++i)
-            {
-                for (var j = -1; j <= cellSize; ++j)
-                {
-                    if (i != -1 && j != -1 && i != cellSize && j != cellSize)
-                        continue;
-
-                    int pixelX = 1 + x * cellSize + i;
-                    int pixelY = 1 + y * cellSize + j;
-
-                    if (pixelX >= 0 && pixelX < result.Width
-                        && pixelY >= 0 && pixelY < result.Height)
-                    {
-                        result.SetPixel(pixelX, pixelY, Color.FromArgb(180, 180, 180));
-                    }
                 }
             }
         }

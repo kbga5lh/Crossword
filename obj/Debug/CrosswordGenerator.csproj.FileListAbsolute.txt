@@ -25,3 +25,4 @@ C:\Users\kbga5\source\repos\CrosswordGenerator\obj\Debug\CrosswordGenerator.cspr
 C:\Users\kbga5\source\repos\CrosswordGenerator\obj\Debug\CrosswordGenerator.csproj.CopyComplete
 C:\Users\kbga5\source\repos\CrosswordGenerator\obj\Debug\CrosswordGenerator.exe
 C:\Users\kbga5\source\repos\CrosswordGenerator\obj\Debug\CrosswordGenerator.pdb
+C:\Users\kbga5\source\repos\CrosswordGenerator\obj\Debug\CrosswordGenerator.csprojAssemblyReference.cache
