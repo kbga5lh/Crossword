@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CrosswordGenerator
+namespace CrosswordApp
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml

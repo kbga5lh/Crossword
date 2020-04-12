@@ -6,18 +6,18 @@ using System.Windows;
 using System.Windows.Controls;
 using Newtonsoft.Json;
 
-namespace CrosswordGenerator
+namespace CrosswordApp
 {
-    public partial class Words : Page
+    public partial class WordsPage : Page
     {
-        public Words()
+        public WordsPage()
         {
             InitializeComponent();
         }
 
         private void GenerateButton_Click(object sender, RoutedEventArgs e)
         {
-            List<(string, string)> words = ReadFromTextBoxes();//ReadFromFile("words.json");
+            List<(string, string)> words = ReadFromFile("words.json");
 
             (Parent as MainWindow).Content = new CrosswordPage(words);
         }

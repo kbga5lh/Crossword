@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace CrosswordGenerator
+namespace CrosswordApp
 {
     public partial class WordsAndDefinitions : UserControl
     {

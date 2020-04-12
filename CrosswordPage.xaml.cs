@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CrosswordGenerator
+namespace CrosswordApp
 {
     /// <summary>
     /// Логика взаимодействия для CrosswordPage.xaml
@@ -23,7 +23,7 @@ namespace CrosswordGenerator
     {
         List<(string word, string definition)> words;
 
-        Crossword crosswordGenerator;
+        CrosswordGenerator crosswordGenerator;
 
         public CrosswordPage(List<(string word, string definition)> words)
         {
@@ -33,12 +33,18 @@ namespace CrosswordGenerator
             for (int i = 0; i < this.words.Count; ++i)
                 this.words[i] = (this.words[i].word.ToLower(), this.words[i].definition);
 
-            crosswordGenerator = new Crossword
+            crosswordGenerator = new CrosswordGenerator
             {
-                Words = this.words.ConvertAll(v => v.word)
+                Words = this.words,
             };
 
             Generate();
+
+            OutputTextBox.Text += "По горизонтали:\n\n";
+            foreach (var v in words)
+            {
+                OutputTextBox.Text += $"?) {v.definition}\n\n";
+            }
         }
 
         void Generate()
@@ -50,7 +56,7 @@ namespace CrosswordGenerator
             var generationTime = sw.Elapsed;
 
             sw.Restart();
-            var image = Crossword.ToImage(crossword);
+            var image = crossword.ToImage();
             sw.Stop();
             var drawingTime = sw.Elapsed;
             OutputImage.Source = Crossword.ConvertToBitmapImage(image);
