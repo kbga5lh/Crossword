@@ -86,7 +86,7 @@ namespace CrosswordApp
                         var c = new Border
                         {
                             Background = Brushes.White,
-                            BorderThickness = new Thickness(0.1),
+                            BorderThickness = new Thickness(0.2),
                             BorderBrush = Brushes.Black,
                         };
                         c.SetValue(Grid.RowProperty, pos.y);
@@ -97,7 +97,8 @@ namespace CrosswordApp
                         {
                             Text = crossword.words[placement.wordIndex].word[placement.isVertical ? j : i].ToString(),
                             VerticalAlignment = VerticalAlignment.Center,
-                            HorizontalAlignment = HorizontalAlignment.Center
+                            HorizontalAlignment = HorizontalAlignment.Center,
+                            Visibility = ShowLettersCheckBox.IsChecked == true ? Visibility.Visible : Visibility.Hidden
                         };
                         a.SetValue(Grid.RowProperty, pos.y);
                         a.SetValue(Grid.ColumnProperty, pos.x);
@@ -145,6 +146,22 @@ namespace CrosswordApp
 
             using (var filestream = new FileStream(filePath, FileMode.Create))
                 encoder.Save(filestream);
+        }
+
+        private void ShowLettersCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            foreach (var tb in CrosswordGrid.Children.OfType<TextBlock>().Where(v => v.FontSize > 8))
+            {
+                tb.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void ShowLettersCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            foreach (var tb in CrosswordGrid.Children.OfType<TextBlock>().Where(v => v.FontSize > 8))
+            {
+                tb.Visibility = Visibility.Hidden;
+            }
         }
     }
 }
