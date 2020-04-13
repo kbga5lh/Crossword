@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:CrosswordApp"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d"
       Title="Words" 
       Background="#F5F5F5">
@@ -16,10 +17,9 @@
         </Grid.RowDefinitions>
         
         <TextBlock Grid.Row="0"
-                   Style="{StaticResource Title}"
-                   Foreground="{StaticResource ForegroundColor}"
-                   FontSize="36"
-                   Margin="75 0"
+                   Style="{DynamicResource MaterialDesignHeadline4TextBlock}"
+                   FontWeight="Black"
+                   Margin="40 0"
                    TextWrapping="Wrap"
                    VerticalAlignment="Center">
             СЛОВА ДЛЯ КРОССВОРДА
@@ -44,10 +44,18 @@
                     Margin="0 8 0 0"
                     Grid.Row="1"
                     HorizontalAlignment="Stretch"
-                    Style="{StaticResource PrimaryButton}"
-                    Foreground="White"
+                    Style="{DynamicResource MaterialDesignFlatMidBgButton}"
                     Click="GenerateButton_Click">
-                Сгенерировать кроссворд
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Home" Margin="8 0" VerticalAlignment="Center">
+                        </materialDesign:PackIcon>
+                        
+                        <TextBlock Margin="8 0" VerticalAlignment="Center">
+                            Сгенерировать кроссворд
+                        </TextBlock>
+                    </StackPanel>
+                </Button.Content>
             </Button>
         </Grid>
     </Grid>

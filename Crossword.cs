@@ -83,7 +83,7 @@ namespace CrosswordApp
 
             for (var x = 0; x < sizeX * cellSize; ++x)
                 for (var y = 0; y < sizeY * cellSize; ++y)
-                    result.SetPixel(x, y, Color.FromArgb(10, 10, 10));
+                    result.SetPixel(x, y, Color.FromArgb(20, 20, 20));
 
             foreach (var placement in placements)
             {

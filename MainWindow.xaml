@@ -8,6 +8,11 @@
         Title="MainWindow"
         Width="900"
         Height="750"
+        TextElement.Foreground="{StaticResource DarkTextColor}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"
         FontFamily="{StaticResource Montserrat}">
         <local:WordsPage>
                 

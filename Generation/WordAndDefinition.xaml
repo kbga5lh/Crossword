@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CrosswordApp"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Margin="0 8">
@@ -46,36 +47,13 @@
 
         </TextBox>
 
-        <Button x:Name="CloseButton" Content="-"
-                                        Background="{StaticResource MainColor}"
-                Grid.Column="4" Width="32"
-                HorizontalAlignment="Center">
-            <Button.Resources>
-                <Style TargetType="Button">
-                    <Setter Property="HorizontalAlignment" Value="Center" />
-
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="Button">
-                                <Grid>
-                                    <Ellipse x:Name="Ellipse" Width="24" Height="24"
-                                                                     Margin="-14 0" Fill="{TemplateBinding Background}"
-                                                                     Opacity=".0" />
-                                    <Image Source="pack://application:,,,/Icons/CloseICon.png"
-                                                                   HorizontalAlignment="Center"
-                                                                   Width="10" Height="10" Margin="0 0" />
-                                </Grid>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="Ellipse" Property="Opacity"
-                                                                        Value=".1" />
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </Button.Resources>
+        <Button x:Name="CloseButton"
+                Grid.Column="4" Width="24"
+                HorizontalAlignment="Center"
+                Height="24"
+                Margin="8"
+                Style="{DynamicResource MaterialDesignIconForegroundButton}">
+            <materialDesign:PackIcon Kind="Close" Width="16" Height="16"/>
         </Button>
     </Grid>
 </UserControl>

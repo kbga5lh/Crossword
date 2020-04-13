@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\kbga5\source\repos\CrosswordGenerator\App.xaml
-5548268501
+6682633827
 
-111232919610
-15-1963052657
-Generation\CrosswordPage.xaml;MainWindow.xaml;Generation\WordAndDefinition.xaml;Generation\WordsPage.xaml;Generation\WordsAndDefinitions.xaml;
+12248291168
+171235805493
+Generation\CrosswordGenerationPage.xaml;MainWindow.xaml;Generation\WordAndDefinition.xaml;Generation\WordsPage.xaml;Generation\WordsAndDefinitions.xaml;Solving\CrosswordSolvingPage.xaml;
 
 False
 
