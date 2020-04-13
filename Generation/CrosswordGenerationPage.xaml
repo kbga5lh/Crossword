@@ -66,9 +66,12 @@
 
         <CheckBox x:Name="ShowLettersCheckBox"
                   Grid.Row="2"
+                  Height="28"
+                  Width="56"
                   Checked="ShowLettersCheckBox_Checked"
-                  Unchecked="ShowLettersCheckBox_Unchecked">
-            Заполнить кроссворд
+                  Unchecked="ShowLettersCheckBox_Unchecked"
+                  Style="{DynamicResource MaterialDesignSwitchToggleButton}">
+            
         </CheckBox>
     </Grid>
 </Page>
