@@ -60,8 +60,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Crossword.cs" />
-    <Compile Include="Generation\CrosswordPage.xaml.cs">
-      <DependentUpon>CrosswordPage.xaml</DependentUpon>
+    <Compile Include="Generation\CrosswordGenerationPage.xaml.cs">
+      <DependentUpon>CrosswordGenerationPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Generation\WordAndDefinition.xaml.cs">
       <DependentUpon>WordAndDefinition.xaml</DependentUpon>
@@ -72,7 +72,10 @@
     <Compile Include="Generation\WordsAndDefinitions.xaml.cs">
       <DependentUpon>WordsAndDefinitions.xaml</DependentUpon>
     </Compile>
-    <Page Include="Generation\CrosswordPage.xaml">
+    <Compile Include="Solving\CrosswordSolvingPage.xaml.cs">
+      <DependentUpon>CrosswordSolvingPage.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Generation\CrosswordGenerationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -97,6 +100,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Generation\WordsAndDefinitions.xaml" />
+    <Page Include="Solving\CrosswordSolvingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -134,8 +141,6 @@
     <Resource Include="Icons\AddIcon.png" />
     <Resource Include="Icons\CloseIcon.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Solving\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

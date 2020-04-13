@@ -1,20 +1,12 @@
 ﻿using Microsoft.Win32;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CrosswordApp
 {
@@ -86,7 +78,7 @@ namespace CrosswordApp
                         var c = new Border
                         {
                             Background = Brushes.White,
-                            BorderThickness = new Thickness(0.2),
+                            BorderThickness = new Thickness(0.5),
                             BorderBrush = Brushes.Black,
                         };
                         c.SetValue(Grid.RowProperty, pos.y);
@@ -113,6 +105,7 @@ namespace CrosswordApp
                     Text = placement.index.ToString(),
                     VerticalAlignment = VerticalAlignment.Top,
                     HorizontalAlignment = HorizontalAlignment.Left,
+                    Margin = new Thickness(2, 2, 0, 0),
                     FontSize = 7
                 };
                 b.SetValue(Grid.RowProperty, placement.y);

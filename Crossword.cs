@@ -79,10 +79,10 @@ namespace CrosswordApp
         {
             var (sizeX, sizeY) = Size;
 
-            var result = new Bitmap(sizeX * cellSize + 2, sizeY * cellSize + 2);
+            var result = new Bitmap(sizeX * cellSize, sizeY * cellSize);
 
-            for (var x = 0; x < sizeX * cellSize + 2; ++x)
-                for (var y = 0; y < sizeY * cellSize + 2; ++y)
+            for (var x = 0; x < sizeX * cellSize; ++x)
+                for (var y = 0; y < sizeY * cellSize; ++y)
                     result.SetPixel(x, y, Color.FromArgb(10, 10, 10));
 
             foreach (var placement in placements)
@@ -115,7 +115,7 @@ namespace CrosswordApp
             {
                 for (var j = 1; j < cellSize - 1; ++j)
                 {
-                    result.SetPixel(1 + x * cellSize + i, 1 + y * cellSize + j,
+                    result.SetPixel(x * cellSize + i, y * cellSize + j,
                         Color.FromArgb(255, 255, 255));
                 }
             }
@@ -128,8 +128,8 @@ namespace CrosswordApp
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
             g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-            var rectf = new RectangleF(1 + x * cellSize,
-                1 + y * cellSize, cellSize, cellSize);
+            var rectf = new RectangleF(2 + x * cellSize,
+                2 + y * cellSize, cellSize, cellSize);
             g.DrawString(index.ToString(), new Font("Tahoma", 8), Brushes.Black, rectf);
 
             g.Flush();
@@ -144,8 +144,8 @@ namespace CrosswordApp
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
             g.PixelOffsetMode = PixelOffsetMode.HighQuality;
             var sizeF = g.MeasureString(ch.ToString(), new Font("Tahoma", 16));
-            var rectf = new RectangleF(1 + x * cellSize + (cellSize - sizeF.Width) / 2,
-                1 + y * cellSize + (cellSize - sizeF.Height) / 2,
+            var rectf = new RectangleF(x * cellSize + (cellSize - sizeF.Width) / 2,
+                y * cellSize + (cellSize - sizeF.Height) / 2,
                 sizeF.Width,
                 sizeF.Height);
             g.DrawString(ch.ToString(), new Font("Tahoma", 16), Brushes.Black, rectf);
