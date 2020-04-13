@@ -46,7 +46,7 @@ namespace CrosswordApp
 
             FillGrid();
 
-            OutputTextBox.Text = crossword.GetDefinitionsString();
+            // OutputTextBox.Text = crossword.GetDefinitionsString();
 
             File.WriteAllText("crossword.json", Newtonsoft.Json.JsonConvert.SerializeObject(crossword,
                 new Newtonsoft.Json.JsonSerializerSettings() { }));
