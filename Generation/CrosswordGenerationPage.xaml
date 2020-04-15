@@ -127,9 +127,10 @@
                         </CheckBox>
                     </Grid>
                     
-                    <Button x:Name="FillButton"
+                    <Button x:Name="GenerateButton"
                             Margin="0 8"
-                            Style="{StaticResource AccentButton}">
+                            Style="{StaticResource AccentButton}"
+                            Click="GenerateButton_Click">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Reload" Margin="0 0 8 0" VerticalAlignment="Center">
                             </materialDesign:PackIcon>
@@ -207,7 +208,8 @@
                     <Button x:Name="SaveImageButton"
                             Margin="0 8"
                             Style="{StaticResource PrimaryButton}"
-                            Foreground="{StaticResource DarkTextColor}">
+                            Foreground="{StaticResource DarkTextColor}"
+                            Click="SaveImageButton_Click">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Download" Margin="0 0 8 0" VerticalAlignment="Center">
                             </materialDesign:PackIcon>
@@ -250,7 +252,7 @@
                     Click="GenerateButton_Click">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="0 0" VerticalAlignment="Center">
-                            Далее
+                            Завершить
                         </TextBlock>
                         <materialDesign:PackIcon Kind="ChevronRight" Margin="8 0 0 0" VerticalAlignment="Center">
                         </materialDesign:PackIcon>

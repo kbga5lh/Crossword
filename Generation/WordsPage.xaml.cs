@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 
 namespace CrosswordApp
@@ -15,32 +16,57 @@ namespace CrosswordApp
             InitializeComponent();
         }
 
-        private void GenerateButton_Click(object sender, RoutedEventArgs e)
+        void GenerateButton_Click(object sender, RoutedEventArgs e)
         {
-            List<(string, string)> words = ReadFromFile("words.json");
+            var words = ReadFromTextBoxes();
 
-            (Parent as MainWindow).Content = new CrosswordPage(words);
+            (Parent as MainWindow).Content = new CrosswordPage(words, NameTextBox.Text);
         }
 
-        private List<(string, string)> ReadFromTextBoxes()
+        List<(string, string)> ReadFromTextBoxes()
         {
-            var words = new List<(string, string)>();
-
-            foreach (WordAndDefinition v in WordsAndDefinitionsElement.WordsStackPanel.Children)
-            {
-                words.Add((v.WordTextBox.Text, v.DefinitionTextBox.Text));
-            }
-
-            return words;
+            return (from WordAndDefinition v
+                in WordsAndDefinitionsElement.WordsStackPanel.Children
+                select (v.WordTextBox.Text, v.DefinitionTextBox.Text)).ToList();
         }
 
-        private static List<(string, string)> ReadFromFile(string path)
+        static List<(string, string)> ReadFromFile(string path)
         {
             var jsonWords = JsonConvert.DeserializeObject(File.ReadAllText(path)) as Newtonsoft.Json.Linq.JArray;
             var words = jsonWords
                 .Select(p => ((string)p["Item1"], (string)p["Item2"]))
                 .ToList();
             return words;
+        }
+
+        void FillButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            var fileDialog = new OpenFileDialog {Filter = "JSON file|*.json"};
+            if (fileDialog.ShowDialog() != true)
+                return;
+            
+            var words = ReadFromFile(fileDialog.FileName);
+            WordsAndDefinitionsElement.WordsStackPanel.Children.Clear();
+            foreach (var word in words)
+            {
+                WordsAndDefinitionsElement.AddWordAndDefinition();
+                var wd = WordsAndDefinitionsElement.WordsStackPanel.Children[
+                    WordsAndDefinitionsElement.WordsStackPanel.Children.Count - 1] as WordAndDefinition;
+                wd.WordTextBox.Text = word.Item1;
+                wd.DefinitionTextBox.Text = word.Item2;
+            }
+        }
+
+        void SaveButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            var fileDialog = new SaveFileDialog {Filter = "JSON file|*.json"};
+            if (fileDialog.ShowDialog() != true)
+                return;
+            
+            var words = ReadFromTextBoxes();
+            var jsonWords = JsonConvert.SerializeObject(words);
+            
+            File.WriteAllText(fileDialog.FileName, jsonWords);
         }
     }
 }

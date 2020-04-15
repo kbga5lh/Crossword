@@ -11,28 +11,29 @@ using Point = System.Windows.Point;
 
 namespace CrosswordApp
 {
-    class CrosswordGenerator
+    internal class CrosswordGenerator
     {
         static readonly Random rng = new Random();
 
-        public List<(string word, string definition)> Words;
+        public List<(string word, string definition)> words;
+        public string name = "Crossword";
 
         public Crossword Generate()
         {
             var result = new Crossword
             {
-                name = "Crossword"
+                name = name,
             };
 
-            Shuffle(Words);
+            Shuffle(words);
 
             var wordPlacements = new List<Crossword.Placement>
             {
                 new Crossword.Placement
-                    {x = 0, y = 0, isVertical = rng.Next(0, 2) > 0, wordIndex = 0, wordLength = Words[0].word.Length}
+                    {x = 0, y = 0, isVertical = rng.Next(0, 2) > 0, wordIndex = 0, wordLength = words[0].word.Length}
             };
 
-            var a = new List<(string, bool)>(Words.ConvertAll(v => (v.word, false)));
+            var a = new List<(string, bool)>(words.ConvertAll(v => (v.word, false)));
             a[0] = (a[0].Item1, true);
             Backtrack(wordPlacements, a);
 
@@ -50,7 +51,7 @@ namespace CrosswordApp
 
             result.words = new List<(string word, string definition)>();
             result.placements = new List<Crossword.Placement>();
-            int i = 1;
+            var i = 1;
             foreach (var placement in wordPlacements)
             {
                 var samePlacementPos = result.placements.FindIndex(v => v.x == placement.x - minX && v.y == placement.y - minY);
@@ -62,7 +63,7 @@ namespace CrosswordApp
                     index = samePlacementPos >= 0 ? (result.placements[samePlacementPos].index) : i++,
                 };
 
-                result.words.Add(Words[placement.wordIndex]);
+                result.words.Add(words[placement.wordIndex]);
                 p.wordIndex = result.words.Count - 1;
                 p.wordLength = result.words[p.wordIndex].word.Length;
 
@@ -77,14 +78,14 @@ namespace CrosswordApp
             if (words.FindIndex(v => v.isPlaced == false) < 0)
                 return true;
 
-            for (var wordIndex = 0; wordIndex < Words.Count; ++wordIndex)
+            for (var wordIndex = 0; wordIndex < this.words.Count; ++wordIndex)
             {
                 if (words[wordIndex].isPlaced)
                     continue;
 
                 for (var i = 0; i < result.Count; i++)
                 {
-                    Crossword.Placement placement = result[i];
+                    var placement = result[i];
                     for (var charInPlacementIndex = 0; charInPlacementIndex < placement.wordLength; charInPlacementIndex++)
                     {
                         var charInPlacement = words[placement.wordIndex].word[charInPlacementIndex];
@@ -155,7 +156,7 @@ namespace CrosswordApp
                 {
                     var p1 = new Point(placement.x + (placement.isVertical ? 0 : i), placement.y + (placement.isVertical ? i : 0));
                     var p2 = new Point(other.x + (other.isVertical ? 0 : j), other.y + (other.isVertical ? j : 0));
-                    if (p1 == p2 && Words[placement.wordIndex].word[i] != Words[other.wordIndex].word[j])
+                    if (p1 == p2 && words[placement.wordIndex].word[i] != words[other.wordIndex].word[j])
                         return false;
                 }
             }

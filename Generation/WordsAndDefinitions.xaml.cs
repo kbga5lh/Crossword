@@ -24,7 +24,7 @@ namespace CrosswordApp
 
                 WordsStackPanel.Children.Remove(wd);
 
-                for (int i = 0; i < WordsStackPanel.Children.Count; ++i)
+                for (var i = 0; i < WordsStackPanel.Children.Count; ++i)
                 {
                     (WordsStackPanel.Children[i] as WordAndDefinition).Index.Text = (i + 1).ToString();
                 }
@@ -32,7 +32,7 @@ namespace CrosswordApp
             WordsStackPanel.Children.Add(wd);
         }
 
-        private void AddButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        void AddButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             AddWordAndDefinition();
         }

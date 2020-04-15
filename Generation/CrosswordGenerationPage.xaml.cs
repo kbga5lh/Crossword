@@ -19,16 +19,17 @@ namespace CrosswordApp
 
         Crossword crossword;
 
-        public CrosswordPage(List<(string word, string definition)> words)
+        public CrosswordPage(List<(string word, string definition)> words, string name)
         {
             InitializeComponent();
 
-            for (int i = 0; i < words.Count; ++i)
+            for (var i = 0; i < words.Count; ++i)
                 words[i] = (words[i].word.ToLower().Trim(), words[i].definition);
 
             crosswordGenerator = new CrosswordGenerator
             {
-                Words = words,
+                words = words,
+                name = name,
             };
 
             Generate();
@@ -36,12 +37,8 @@ namespace CrosswordApp
 
         void Generate()
         {
-            var sw = new Stopwatch();
-            sw.Start();
             crossword = crosswordGenerator.Generate();
-            sw.Stop();
-            var generationTime = sw.Elapsed;
-
+            
             crossword.placements.Sort((v1, v2) => v2.index > v1.index ? -1 : 1);
 
             FillGrid(24);
@@ -57,21 +54,21 @@ namespace CrosswordApp
 
             CrosswordGrid.Children.Clear();
             CrosswordGrid.RowDefinitions.Clear();
-            for (int i = 0; i < size.y; ++i)
-                CrosswordGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(cellSize) });
+            for (var i = 0; i < size.y; ++i)
+                CrosswordGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(cellSize) });
             CrosswordGrid.ColumnDefinitions.Clear();
-            for (int i = 0; i < size.x; ++i)
-                CrosswordGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(cellSize) });
+            for (var i = 0; i < size.x; ++i)
+                CrosswordGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(cellSize) });
 
             var cells = new bool[size.x, size.y];
             foreach (var placement in crossword.placements)
             {
-                for (int i = 0; i < placement.Width; ++i)
+                for (var i = 0; i < placement.Width; ++i)
                 {
-                    for (int j = 0; j < placement.Height; ++j)
+                    for (var j = 0; j < placement.Height; ++j)
                     {
                         (int x, int y) pos = (placement.x + i, placement.y + j);
-                        if (cells[pos.x, pos.y] == true)
+                        if (cells[pos.x, pos.y])
                             continue;
 
                         var c = new Border
@@ -113,12 +110,12 @@ namespace CrosswordApp
             }
         }
 
-        private void GenerateButton_Click(object sender, RoutedEventArgs e)
+        void GenerateButton_Click(object sender, RoutedEventArgs e)
         {
             Generate();
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        void SaveImageButton_Click(object sender, RoutedEventArgs e)
         {
             var a = new SaveFileDialog
             {
@@ -128,10 +125,11 @@ namespace CrosswordApp
             if (a.ShowDialog() != true)
                 return;
 
-            string filePath = a.FileName;
-            JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+            var filePath = a.FileName;
+            var encoder = new JpegBitmapEncoder();
 
-            var image = crossword.ToImage();
+            var image = crossword.ToImage(ShowLettersOnImageCheckBox.IsChecked == true,
+                int.Parse(CellSizeTextBox.Text));
             var bitmapImage = Crossword.ConvertToBitmapImage(image);
 
             encoder.Frames.Add(BitmapFrame.Create(bitmapImage));
@@ -140,7 +138,7 @@ namespace CrosswordApp
                 encoder.Save(filestream);
         }
 
-        private void ShowLettersCheckBox_Checked(object sender, RoutedEventArgs e)
+        void ShowLettersCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             foreach (var tb in CrosswordGrid.Children.OfType<TextBlock>().Where(v => v.FontSize > 8))
             {
@@ -148,7 +146,7 @@ namespace CrosswordApp
             }
         }
 
-        private void ShowLettersCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        void ShowLettersCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             foreach (var tb in CrosswordGrid.Children.OfType<TextBlock>().Where(v => v.FontSize > 8))
             {

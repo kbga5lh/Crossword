@@ -111,7 +111,8 @@
 
                     <Button x:Name="FillButton"
                             Margin="0 8"
-                            Style="{StaticResource AccentButton}">
+                            Style="{StaticResource AccentButton}"
+                            Click="FillButton_OnClick">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Upload" Margin="0 0 8 0" VerticalAlignment="Center">
                             </materialDesign:PackIcon>
@@ -124,7 +125,8 @@
 
                     <Button x:Name="SaveButton"
                             Margin="0 8"
-                            Style="{StaticResource AccentButton}">
+                            Style="{StaticResource AccentButton}"
+                            Click="SaveButton_OnClick">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Download" Margin="0 0 8 0" VerticalAlignment="Center">
                             </materialDesign:PackIcon>
