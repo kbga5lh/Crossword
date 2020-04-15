@@ -18,6 +18,7 @@
             <Brush x:Key="IntermediateColor">#444444</Brush>
             <Brush x:Key="LightGrayColor">#F5F5F5</Brush>
             <Brush x:Key="DarkGrayColor">#E5E5E5</Brush>
+            
             <FontFamily x:Key="Montserrat">pack://application:,,,/Fonts/#Montserrat</FontFamily>
 
             <Style x:Key="ErrorText" TargetType="TextBlock">

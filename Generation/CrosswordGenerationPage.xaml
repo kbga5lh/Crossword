@@ -79,8 +79,34 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <ScrollViewer Padding="8 16">
+            <ScrollViewer Padding="16 16"
+                          VerticalScrollBarVisibility="Auto">
                 <StackPanel Orientation="Vertical">
+                    <TextBlock FontWeight="Bold"
+                               VerticalAlignment="Center"
+                               Margin="0 8">
+                        Кроссворд
+                    </TextBlock>
+                    
+                    <Grid Margin="0 8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock VerticalAlignment="Center" Margin="0 0 8 0"
+                                   TextWrapping="Wrap">
+                            Пропущенные слова
+                        </TextBlock>
+
+                        <TextBox x:Name="NameTextBox"
+                                 Margin="8 0 0 0"
+                                 Grid.Column="1"
+                                 Style="{StaticResource InputTextBox}">
+                            0
+                        </TextBox>
+                    </Grid>
+                    
                     <Grid Margin="0 8">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -92,7 +118,7 @@
                         </TextBlock>
 
                         <CheckBox x:Name="ShowLettersCheckBox"
-                                  Margin="8 0 16 0"
+                                  Margin="8 0 8 0"
                                   Grid.Column="1"
                                   Checked="ShowLettersCheckBox_Checked"
                                   Unchecked="ShowLettersCheckBox_Unchecked"
@@ -100,6 +126,97 @@
                             
                         </CheckBox>
                     </Grid>
+                    
+                    <Button x:Name="FillButton"
+                            Margin="0 8"
+                            Style="{StaticResource AccentButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Reload" Margin="0 0 8 0" VerticalAlignment="Center">
+                            </materialDesign:PackIcon>
+
+                            <TextBlock Margin="0 0" VerticalAlignment="Center">
+                                Сгенерировать еще раз
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="SaveButton"
+                            Margin="0 8"
+                            Style="{StaticResource PrimaryButton}"
+                            Foreground="{StaticResource DarkTextColor}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Download" Margin="0 0 8 0" VerticalAlignment="Center">
+                            </materialDesign:PackIcon>
+
+                            <TextBlock Margin="0 0" VerticalAlignment="Center">
+                                Сохранить в файл
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+                    
+                    <Separator HorizontalAlignment="Stretch"
+                               Height="1"
+                               Margin="0 8"
+                               Background="{StaticResource LightGrayColor}">
+                        
+                    </Separator>
+                    
+                    <TextBlock FontWeight="Bold"
+                               VerticalAlignment="Center"
+                               Margin="0 8">
+                        Изображение
+                    </TextBlock>
+                    
+                    <Grid Margin="0 8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock VerticalAlignment="Center" Margin="0 0 8 0"
+                                   TextWrapping="Wrap">
+                            Размер клетки
+                        </TextBlock>
+
+                        <TextBox x:Name="CellSizeTextBox"
+                                 Margin="8 0 0 0"
+                                 Grid.Column="1"
+                                 Style="{StaticResource InputTextBox}">
+                            48
+                        </TextBox>
+                    </Grid>
+                    
+                    <Grid Margin="0 8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock VerticalAlignment="Center" Margin="0 0 8 0">
+                            Отобразить слова
+                        </TextBlock>
+
+                        <CheckBox x:Name="ShowLettersOnImageCheckBox"
+                                  Margin="8 0 8 0"
+                                  Grid.Column="1"
+                                  Style="{DynamicResource MaterialDesignSwitchToggleButton}">
+                            
+                        </CheckBox>
+                    </Grid>
+                    
+                    <Button x:Name="SaveImageButton"
+                            Margin="0 8"
+                            Style="{StaticResource PrimaryButton}"
+                            Foreground="{StaticResource DarkTextColor}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Download" Margin="0 0 8 0" VerticalAlignment="Center">
+                            </materialDesign:PackIcon>
+
+                            <TextBlock Margin="0 0" VerticalAlignment="Center">
+                                Сохранить в файл
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
             </ScrollViewer>
 
@@ -112,7 +229,6 @@
                 <Button x:Name="BackButton"
                     Margin="8"
                 Grid.Column="0"
-                        FontSize="13"
                     HorizontalAlignment="Stretch"
                     Style="{StaticResource SecondaryButton}">
                     <StackPanel Orientation="Horizontal">
@@ -128,8 +244,7 @@
                 <Button x:Name="NextButton"
                     Margin="8"
                 Grid.Column="1"
-                        FontSize="13"
-                        Foreground="{StaticResource DarkTextColor}"
+                    Foreground="{StaticResource DarkTextColor}"
                     HorizontalAlignment="Stretch"
                     Style="{StaticResource PrimaryButton}"
                     Click="GenerateButton_Click">

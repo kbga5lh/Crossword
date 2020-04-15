@@ -9,7 +9,7 @@
       Title="Words" 
       Background="#F5F5F5">
     <Grid>
-        <Grid.RowDefinitions>
+        <Grid.RowDefinitions>    
             <RowDefinition Height="75"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -63,7 +63,8 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <ScrollViewer Padding="8 16">
+            <ScrollViewer Padding="16 16"
+                          VerticalScrollBarVisibility="Auto">
                 <StackPanel Orientation="Vertical">
                     <TextBlock FontWeight="Bold"
                                VerticalAlignment="Center"
@@ -104,7 +105,7 @@
                                  Margin="8 0 0 0"
                                  Grid.Column="1"
                                  Style="{StaticResource InputTextBox}">
-
+                            1
                         </TextBox>
                     </Grid>
 
@@ -145,7 +146,6 @@
                 <Button x:Name="BackButton"
                     Margin="8"
                 Grid.Column="0"
-                        FontSize="13"
                     HorizontalAlignment="Stretch"
                     Style="{StaticResource SecondaryButton}">
                     <StackPanel Orientation="Horizontal">
@@ -161,8 +161,7 @@
                 <Button x:Name="NextButton"
                     Margin="8"
                 Grid.Column="1"
-                        FontSize="13"
-                        Foreground="{StaticResource DarkTextColor}"
+                    Foreground="{StaticResource DarkTextColor}"
                     HorizontalAlignment="Stretch"
                     Style="{StaticResource PrimaryButton}"
                     Click="GenerateButton_Click">
