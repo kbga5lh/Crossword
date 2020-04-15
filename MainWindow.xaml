@@ -18,7 +18,7 @@
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"
         FontFamily="{StaticResource Montserrat}">
-        <local:MainCrosswordGenerationPage>
+        <local:MainMenuPage>
                 
-        </local:MainCrosswordGenerationPage>
+        </local:MainMenuPage>
 </Window>

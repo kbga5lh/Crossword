@@ -231,7 +231,8 @@
                 Grid.Column="1"
                     Foreground="{StaticResource DarkTextColor}"
                     HorizontalAlignment="Stretch"
-                    Style="{StaticResource PrimaryButton}">
+                    Style="{StaticResource PrimaryButton}"
+                    Click="FinishButton_OnClick">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="0 0" VerticalAlignment="Center">
                             Завершить

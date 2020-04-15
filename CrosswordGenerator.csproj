@@ -83,6 +83,9 @@
     <Compile Include="Generation\WordsAndDefinitions.xaml.cs">
       <DependentUpon>WordsAndDefinitions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainMenuPage.xaml.cs">
+      <DependentUpon>MainMenuPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Solving\CrosswordSolvingPage.xaml.cs">
       <DependentUpon>CrosswordSolvingPage.xaml</DependentUpon>
     </Compile>
@@ -91,6 +94,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Generation\MainCrosswordGenerationPage.xaml" />
+    <Page Include="MainMenuPage.xaml" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

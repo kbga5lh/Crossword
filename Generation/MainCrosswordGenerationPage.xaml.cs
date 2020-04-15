@@ -25,7 +25,7 @@ namespace CrosswordApp
         
         public void ToMenuPage()
         {
-            
+            (Parent as MainWindow).Content = new MainMenuPage();
         }
     }
 }

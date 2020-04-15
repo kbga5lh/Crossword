@@ -177,5 +177,10 @@ namespace CrosswordApp
                 tb.Visibility = Visibility.Hidden;
             }
         }
+
+        void FinishButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            (Parent as MainCrosswordGenerationPage).ToMenuPage();
+        }
     }
 }
