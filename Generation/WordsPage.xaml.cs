@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 
@@ -67,6 +68,31 @@ namespace CrosswordApp
             var jsonWords = JsonConvert.SerializeObject(words);
             
             File.WriteAllText(fileDialog.FileName, jsonWords);
+        }
+
+        void WordsAmountTextBox_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key != Key.Return) return;
+            ResizeWordsAndDefinitions();
+        }
+
+        void ResizeWordsAndDefinitions()
+        {
+            if (!int.TryParse(WordsAmountTextBox.Text, out var wordsAmount))
+            {
+                return;
+            }
+
+            if (wordsAmount < 1 || wordsAmount > 500)
+            {
+                return;
+            }
+            WordsAndDefinitionsElement.Resize(wordsAmount);
+        }
+
+        void WordsAmountTextBox_OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            ResizeWordsAndDefinitions();
         }
     }
 }

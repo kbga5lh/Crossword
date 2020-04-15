@@ -8,7 +8,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <materialDesign:CustomColorTheme BaseTheme="Light" PrimaryColor="#4EF199" SecondaryColor="#F5F5F5" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <Brush x:Key="MainColor">#4EF199</Brush>
@@ -18,7 +19,7 @@
             <Brush x:Key="IntermediateColor">#444444</Brush>
             <Brush x:Key="LightGrayColor">#F5F5F5</Brush>
             <Brush x:Key="DarkGrayColor">#E5E5E5</Brush>
-            
+
             <FontFamily x:Key="Montserrat">pack://application:,,,/Fonts/#Montserrat</FontFamily>
 
             <Style x:Key="ErrorText" TargetType="TextBlock">
@@ -53,24 +54,21 @@
                         <ControlTemplate TargetType="{x:Type TextBoxBase}">
                             <Grid>
                                 <Border Name="Border"
-                                    CornerRadius="4"
-                                    Padding="6 0"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}">
-
-                                    <ScrollViewer Margin="0"
-                                                x:Name="PART_ContentHost" />
-                                </Border>
+                                        CornerRadius="4"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}" />
                                 <TextBlock Text="{TemplateBinding Tag}"
-                                        IsHitTestVisible="False"
-                                        VerticalAlignment="Center"
-                                        Foreground="#aaa"
-                                        Visibility="{Binding
-                    RelativeSource={RelativeSource Mode=TemplatedParent},
-                    Path=Text.IsEmpty,
-                    Converter={StaticResource BooleanToVisibilityConverter}}"
-                                        Padding="10 0" />
+                                           IsHitTestVisible="False"
+                                           VerticalAlignment="Center"
+                                           Foreground="#aaa"
+                                           Visibility="{Binding
+                                            RelativeSource={RelativeSource Mode=TemplatedParent},
+                                            Path=Text.IsEmpty,
+                                            Converter={StaticResource BooleanToVisibilityConverter}}"
+                                           Padding="10 0" />
+                                <ScrollViewer Margin="8 0"
+                                              x:Name="PART_ContentHost" />
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>
@@ -114,7 +112,7 @@
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="{StaticResource MainLighterColor}" />
-                                    <Setter Property="Cursor" Value="Hand"/>
+                                    <Setter Property="Cursor" Value="Hand" />
                                 </Trigger>
                                 <Trigger Property="IsEnabled" Value="False">
                                     <Setter Property="Background" Value="{StaticResource IntermediateColor}" />
@@ -154,7 +152,7 @@
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="{StaticResource LightGrayColor}" />
-                                    <Setter Property="Cursor" Value="Hand"/>
+                                    <Setter Property="Cursor" Value="Hand" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -190,7 +188,7 @@
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="{StaticResource DarkGrayColor}" />
-                                    <Setter Property="Cursor" Value="Hand"/>
+                                    <Setter Property="Cursor" Value="Hand" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>

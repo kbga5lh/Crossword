@@ -128,8 +128,7 @@ namespace CrosswordApp
             var filePath = a.FileName;
             var encoder = new JpegBitmapEncoder();
 
-            var image = crossword.ToImage(ShowLettersOnImageCheckBox.IsChecked == true,
-                int.Parse(CellSizeTextBox.Text));
+            var image = crossword.ToImage(ShowLettersOnImageCheckBox.IsChecked == true);
             var bitmapImage = Crossword.ConvertToBitmapImage(image);
 
             encoder.Frames.Add(BitmapFrame.Create(bitmapImage));

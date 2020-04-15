@@ -170,25 +170,6 @@
                     
                     <Grid Margin="0 8">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="2*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock VerticalAlignment="Center" Margin="0 0 8 0"
-                                   TextWrapping="Wrap">
-                            Размер клетки
-                        </TextBlock>
-
-                        <TextBox x:Name="CellSizeTextBox"
-                                 Margin="8 0 0 0"
-                                 Grid.Column="1"
-                                 Style="{StaticResource InputTextBox}">
-                            48
-                        </TextBox>
-                    </Grid>
-                    
-                    <Grid Margin="0 8">
-                        <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>

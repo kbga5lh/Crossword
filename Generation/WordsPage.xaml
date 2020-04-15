@@ -87,7 +87,7 @@
                                  Tag="Название"
                                  Grid.Column="1"
                                  Style="{StaticResource InputTextBox}">
-                            
+                            Кроссворд
                         </TextBox>
                     </Grid>
 
@@ -104,6 +104,8 @@
                         <TextBox x:Name="WordsAmountTextBox"
                                  Margin="8 0 0 0"
                                  Grid.Column="1"
+                                 KeyDown="WordsAmountTextBox_OnKeyDown"
+                                 LostFocus="WordsAmountTextBox_OnLostFocus"
                                  Style="{StaticResource InputTextBox}">
                             1
                         </TextBox>

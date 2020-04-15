@@ -36,5 +36,20 @@ namespace CrosswordApp
         {
             AddWordAndDefinition();
         }
+
+        public void Resize(int wordsAmount)
+        {
+            if (wordsAmount < WordsStackPanel.Children.Count)
+            {
+                WordsStackPanel.Children.RemoveRange(wordsAmount, WordsStackPanel.Children.Count - wordsAmount);
+            }
+            else
+            {
+                for (var i = 0; WordsStackPanel.Children.Count < wordsAmount; ++i)
+                {
+                    AddWordAndDefinition();
+                }
+            }
+        }
     }
 }
