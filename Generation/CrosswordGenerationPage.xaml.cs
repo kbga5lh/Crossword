@@ -7,13 +7,14 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Newtonsoft.Json;
 
 namespace CrosswordApp
 {
     /// <summary>
     /// Логика взаимодействия для CrosswordPage.xaml
     /// </summary>
-    public partial class CrosswordPage : Page
+    public partial class CrosswordPage : UserControl
     {
         CrosswordGenerator crosswordGenerator;
 
@@ -37,15 +38,20 @@ namespace CrosswordApp
 
         void Generate()
         {
+            var sw = new Stopwatch();
+            sw.Start();
             crossword = crosswordGenerator.Generate();
+            sw.Stop();
+            CrosswordInfoTextBlock.Text = $"Сгенерировано за {sw.Elapsed.TotalMilliseconds} мс";
             
             crossword.placements.Sort((v1, v2) => v2.index > v1.index ? -1 : 1);
 
             FillGrid(24);
 
-            // OutputTextBox.Text = crossword.GetDefinitionsString();
+            var unusedWords = crosswordGenerator.words.Count - crossword.placements.Count;
+            UnusedWordsTextBox.Text = unusedWords.ToString();
 
-            File.WriteAllText("crossword.json", Newtonsoft.Json.JsonConvert.SerializeObject(crossword));
+            // OutputTextBox.Text = crossword.GetDefinitionsString();
         }
 
         void FillGrid(int cellSize)
@@ -110,22 +116,41 @@ namespace CrosswordApp
             }
         }
 
+        void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            (Parent as MainCrosswordGenerationPage).ToWordsPage();
+        }
+        
         void GenerateButton_Click(object sender, RoutedEventArgs e)
         {
             Generate();
         }
 
+        void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            var fileDialog = new SaveFileDialog
+            {
+                FileName = "crossword",
+                Filter = "JSON file|*.json"
+            };
+            if (fileDialog.ShowDialog() != true)
+                return;
+            
+            var jsonCrossword = JsonConvert.SerializeObject(crossword);
+            File.WriteAllText(fileDialog.FileName, jsonCrossword);
+        }
+        
         void SaveImageButton_Click(object sender, RoutedEventArgs e)
         {
-            var a = new SaveFileDialog
+            var fileDialog = new SaveFileDialog
             {
                 FileName = "crossword",
                 Filter = "Bitmap Image (.bmp)|*.bmp|Gif Image (.gif)|*.gif|JPEG Image (.jpeg)|*.jpeg|Png Image (.png)|*.png|Tiff Image (.tiff)|*.tiff|Wmf Image (.wmf)|*.wmf"
             };
-            if (a.ShowDialog() != true)
+            if (fileDialog.ShowDialog() != true)
                 return;
 
-            var filePath = a.FileName;
+            var filePath = fileDialog.FileName;
             var encoder = new JpegBitmapEncoder();
 
             var image = crossword.ToImage(ShowLettersOnImageCheckBox.IsChecked == true);

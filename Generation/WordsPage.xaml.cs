@@ -10,18 +10,28 @@ using Newtonsoft.Json;
 
 namespace CrosswordApp
 {
-    public partial class WordsPage : Page
+    public partial class WordsPage : UserControl
     {
         public WordsPage()
         {
             InitializeComponent();
+
+            WordsAndDefinitionsElement.CountChange += (sender, args) =>
+            {
+                WordsAmountTextBox.Text = WordsAndDefinitionsElement.WordsStackPanel.Children.Count.ToString();
+            };
+        }
+
+        void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            (Parent as MainCrosswordGenerationPage).ToMenuPage();
         }
 
         void GenerateButton_Click(object sender, RoutedEventArgs e)
         {
             var words = ReadFromTextBoxes();
 
-            (Parent as MainWindow).Content = new CrosswordPage(words, NameTextBox.Text);
+            (Parent as MainCrosswordGenerationPage).ToCrosswordPage(new CrosswordPage(words, NameTextBox.Text));
         }
 
         List<(string, string)> ReadFromTextBoxes()
@@ -48,14 +58,16 @@ namespace CrosswordApp
             
             var words = ReadFromFile(fileDialog.FileName);
             WordsAndDefinitionsElement.WordsStackPanel.Children.Clear();
-            foreach (var word in words)
+            foreach (var (word, definition) in words)
             {
                 WordsAndDefinitionsElement.AddWordAndDefinition();
                 var wd = WordsAndDefinitionsElement.WordsStackPanel.Children[
                     WordsAndDefinitionsElement.WordsStackPanel.Children.Count - 1] as WordAndDefinition;
-                wd.WordTextBox.Text = word.Item1;
-                wd.DefinitionTextBox.Text = word.Item2;
+                wd.WordTextBox.Text = word;
+                wd.DefinitionTextBox.Text = definition;
             }
+
+            WordsAmountTextBox.Text = WordsAndDefinitionsElement.WordsStackPanel.Children.Count.ToString();
         }
 
         void SaveButton_OnClick(object sender, RoutedEventArgs e)

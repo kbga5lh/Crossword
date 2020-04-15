@@ -6,6 +6,8 @@ namespace CrosswordApp
 {
     public partial class WordsAndDefinitions : UserControl
     {
+        public event EventHandler CountChange;
+        
         public WordsAndDefinitions()
         {
             InitializeComponent();
@@ -28,8 +30,10 @@ namespace CrosswordApp
                 {
                     (WordsStackPanel.Children[i] as WordAndDefinition).Index.Text = (i + 1).ToString();
                 }
+                CountChange?.Invoke(this, EventArgs.Empty);
             };
             WordsStackPanel.Children.Add(wd);
+            CountChange?.Invoke(this, EventArgs.Empty);
         }
 
         void AddButton_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -50,6 +54,7 @@ namespace CrosswordApp
                     AddWordAndDefinition();
                 }
             }
+            CountChange?.Invoke(this, EventArgs.Empty);
         }
     }
 }

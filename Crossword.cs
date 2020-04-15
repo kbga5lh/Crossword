@@ -33,6 +33,8 @@ namespace CrosswordApp
         public string name;
         public List<(string word, string definition)> words;
         public List<Placement> placements;
+
+        [Newtonsoft.Json.JsonIgnore]
         public (int x, int y) Size
         {
             get

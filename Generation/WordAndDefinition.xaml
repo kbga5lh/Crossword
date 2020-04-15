@@ -35,7 +35,7 @@
         <Separator Grid.Column="2"
                        Width="10"
                        Margin="15"
-                       Background="{StaticResource MainColor}">
+                       Background="{StaticResource IntermediateColor}">
 
         </Separator>
 
