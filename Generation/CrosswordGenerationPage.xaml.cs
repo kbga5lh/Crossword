@@ -44,15 +44,14 @@ namespace CrosswordApp
 
             crossword.placements.Sort((v1, v2) => v2.index > v1.index ? -1 : 1);
 
-            FillGrid();
+            FillGrid(24);
 
             // OutputTextBox.Text = crossword.GetDefinitionsString();
 
-            File.WriteAllText("crossword.json", Newtonsoft.Json.JsonConvert.SerializeObject(crossword,
-                new Newtonsoft.Json.JsonSerializerSettings() { }));
+            File.WriteAllText("crossword.json", Newtonsoft.Json.JsonConvert.SerializeObject(crossword));
         }
 
-        void FillGrid(int cellSize = 24)
+        void FillGrid(int cellSize)
         {
             var size = crossword.Size;
 

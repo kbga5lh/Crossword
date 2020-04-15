@@ -56,7 +56,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    
+
                     <Grid x:Name="CrosswordGrid"
                           HorizontalAlignment="Center">
 
@@ -66,7 +66,7 @@
                              Grid.Row="1"
                              HorizontalAlignment="Left"
                              TextWrapping="Wrap">
-                    
+
                     </TextBox>
                 </Grid>
             </ScrollViewer>
@@ -81,11 +81,25 @@
 
             <ScrollViewer Padding="8 16">
                 <StackPanel Orientation="Vertical">
-                    <CheckBox x:Name="ShowLettersCheckBox"
-                              Checked="ShowLettersCheckBox_Checked"
-                              Unchecked="ShowLettersCheckBox_Unchecked">
-                        Отобразить слова
-                    </CheckBox>
+                    <Grid Margin="0 8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock VerticalAlignment="Center" Margin="0 0 8 0">
+                            Отобразить слова
+                        </TextBlock>
+
+                        <CheckBox x:Name="ShowLettersCheckBox"
+                                  Margin="8 0 16 0"
+                                  Grid.Column="1"
+                                  Checked="ShowLettersCheckBox_Checked"
+                                  Unchecked="ShowLettersCheckBox_Unchecked"
+                                  Style="{DynamicResource MaterialDesignSwitchToggleButton}">
+                            
+                        </CheckBox>
+                    </Grid>
                 </StackPanel>
             </ScrollViewer>
 
@@ -100,7 +114,7 @@
                 Grid.Column="0"
                         FontSize="13"
                     HorizontalAlignment="Stretch"
-                    Style="{DynamicResource MaterialDesignFlatAccentButton}">
+                    Style="{StaticResource SecondaryButton}">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="ChevronLeft" Margin="0 0 8 0" VerticalAlignment="Center">
                         </materialDesign:PackIcon>
@@ -115,8 +129,10 @@
                     Margin="8"
                 Grid.Column="1"
                         FontSize="13"
+                        Foreground="{StaticResource DarkTextColor}"
                     HorizontalAlignment="Stretch"
-                    Style="{DynamicResource MaterialDesignFlatMidBgButton}">
+                    Style="{StaticResource PrimaryButton}"
+                    Click="GenerateButton_Click">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="0 0" VerticalAlignment="Center">
                             Далее
@@ -128,69 +144,4 @@
             </Grid>
         </Grid>
     </Grid>
-    <!--<Grid Margin="30">
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
-        <ScrollViewer HorizontalScrollBarVisibility="Auto"
-                      VerticalScrollBarVisibility="Auto"
-                      Margin="0 0 8 0">
-            <Grid x:Name="CrosswordGrid"
-                  VerticalAlignment="Center"
-                  HorizontalAlignment="Center">
-                
-            </Grid>
-        </ScrollViewer>
-
-        <TextBox x:Name="OutputTextBox"
-                 Grid.Row="0"
-                 Grid.Column="1"
-                 IsReadOnly="True"
-                 Margin="8 0 0 0"
-                 TextWrapping="Wrap"
-                 Style="{DynamicResource MaterialDesignTextBoxBase}"
-                 VerticalAlignment="Stretch"
-                 Height="Auto"
-                 BorderThickness="0"
-                 Padding="8">
-
-        </TextBox>
-
-        <Button x:Name="GenerateButton"
-                    Margin="0 8 8 0"
-                    Grid.Row="1"
-                    HorizontalAlignment="Stretch"
-                    Style="{DynamicResource MaterialDesignFlatMidBgButton}"
-                    Click="GenerateButton_Click">
-            Сгенерировать еще раз
-        </Button>
-
-        <Button x:Name="SaveButton"
-                    Margin="8 8 0 0"
-                    Grid.Row="1"
-                Grid.Column="2"
-                    HorizontalAlignment="Stretch"
-                    Style="{DynamicResource MaterialDesignFlatAccentBgButton}"
-                    Click="SaveButton_Click">
-            Сохранить изображение
-        </Button>
-
-        <CheckBox x:Name="ShowLettersCheckBox"
-                  Grid.Row="2"
-                  Height="28"
-                  Width="56"
-                  Checked="ShowLettersCheckBox_Checked"
-                  Unchecked="ShowLettersCheckBox_Unchecked"
-                  Style="{DynamicResource MaterialDesignSwitchToggleButton}">
-            
-    </Grid>
-        </CheckBox>-->
 </Page>

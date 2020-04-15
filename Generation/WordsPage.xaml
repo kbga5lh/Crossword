@@ -64,7 +64,76 @@
             </Grid.RowDefinitions>
 
             <ScrollViewer Padding="8 16">
-                bla bla
+                <StackPanel Orientation="Vertical">
+                    <TextBlock FontWeight="Bold"
+                               VerticalAlignment="Center"
+                               Margin="0 8">
+                        Кроссворд
+                    </TextBlock>
+
+                    <Grid Margin="0 8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock VerticalAlignment="Center" Margin="0 0 8 0">
+                            Название
+                        </TextBlock>
+
+                        <TextBox x:Name="NameTextBox"
+                                 Margin="8 0 0 0"
+                                 Tag="Название"
+                                 Grid.Column="1"
+                                 Style="{StaticResource InputTextBox}">
+                            
+                        </TextBox>
+                    </Grid>
+
+                    <Grid Margin="0 8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock VerticalAlignment="Center" Margin="0 0 8 0">
+                            Количество слов
+                        </TextBlock>
+
+                        <TextBox x:Name="WordsAmountTextBox"
+                                 Margin="8 0 0 0"
+                                 Grid.Column="1"
+                                 Style="{StaticResource InputTextBox}">
+
+                        </TextBox>
+                    </Grid>
+
+                    <Button x:Name="FillButton"
+                            Margin="0 8"
+                            Style="{StaticResource AccentButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Upload" Margin="0 0 8 0" VerticalAlignment="Center">
+                            </materialDesign:PackIcon>
+
+                            <TextBlock Margin="0 0" VerticalAlignment="Center">
+                                Заполнить из файла
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="SaveButton"
+                            Margin="0 8"
+                            Style="{StaticResource AccentButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Download" Margin="0 0 8 0" VerticalAlignment="Center">
+                            </materialDesign:PackIcon>
+
+                            <TextBlock Margin="0 0" VerticalAlignment="Center">
+                                Сохранить в файл
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
             </ScrollViewer>
 
             <Grid Grid.Row="1">
@@ -78,7 +147,7 @@
                 Grid.Column="0"
                         FontSize="13"
                     HorizontalAlignment="Stretch"
-                    Style="{DynamicResource MaterialDesignFlatAccentButton}">
+                    Style="{StaticResource SecondaryButton}">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="ChevronLeft" Margin="0 0 8 0" VerticalAlignment="Center">
                         </materialDesign:PackIcon> 
@@ -93,8 +162,9 @@
                     Margin="8"
                 Grid.Column="1"
                         FontSize="13"
+                        Foreground="{StaticResource DarkTextColor}"
                     HorizontalAlignment="Stretch"
-                    Style="{DynamicResource MaterialDesignFlatMidBgButton}"
+                    Style="{StaticResource PrimaryButton}"
                     Click="GenerateButton_Click">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="0 0" VerticalAlignment="Center">

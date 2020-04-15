@@ -7,13 +7,17 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <materialDesign:CustomColorTheme BaseTheme="Light" PrimaryColor="#4EF199" SecondaryColor="#2c2c2c" />
+                <materialDesign:CustomColorTheme BaseTheme="Light" PrimaryColor="#4EF199" SecondaryColor="#F5F5F5" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <Brush x:Key="MainColor">#4EF199</Brush>
+            <Brush x:Key="MainDarkerColor">#04AA60</Brush>
+            <Brush x:Key="MainLighterColor">#83FFC0</Brush>
             <Brush x:Key="DarkTextColor">#2C2C2C</Brush>
             <Brush x:Key="IntermediateColor">#444444</Brush>
+            <Brush x:Key="LightGrayColor">#F5F5F5</Brush>
+            <Brush x:Key="DarkGrayColor">#E5E5E5</Brush>
             <FontFamily x:Key="Montserrat">pack://application:,,,/Fonts/#Montserrat</FontFamily>
 
             <Style x:Key="ErrorText" TargetType="TextBlock">
@@ -36,7 +40,7 @@
                 <Setter Property="VerticalContentAlignment" Value="Center" />
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="Foreground" Value="{StaticResource DarkTextColor}" />
-                <Setter Property="Background" Value="{StaticResource IntermediateColor}" />
+                <Setter Property="Background" Value="{StaticResource LightGrayColor}" />
                 <Setter Property="FontSize" Value="13" />
                 <Setter Property="FontWeight" Value="Regular" />
                 <Setter Property="Height" Value="32" />
@@ -82,6 +86,117 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
+
+            <!-- PrimaryButton -->
+            <Style x:Key="PrimaryButton" TargetType="{x:Type Button}">
+                <Setter Property="Background" Value="{StaticResource MainColor}" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="Height" Value="32" />
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border CornerRadius="4" Background="{TemplateBinding Background}"
+                                    Width="{TemplateBinding Width}">
+                                <TextBlock TextAlignment="Center"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           Padding="8, 0"
+                                           Foreground="{TemplateBinding Foreground}"
+                                           FontSize="{TemplateBinding FontSize}">
+                                    <ContentPresenter Content="{TemplateBinding Content}" />
+                                </TextBlock>
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{StaticResource MainLighterColor}" />
+                                    <Setter Property="Cursor" Value="Hand"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Background" Value="{StaticResource IntermediateColor}" />
+                                    <Setter Property="Foreground" Value="{StaticResource DarkTextColor}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- SecondaryButton -->
+            <Style x:Key="SecondaryButton" TargetType="{x:Type Button}">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="{StaticResource DarkTextColor}" />
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Height" Value="32" />
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border CornerRadius="4" Background="{TemplateBinding Background}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    BorderBrush="{TemplateBinding BorderBrush}">
+                                <TextBlock TextAlignment="Center"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           Padding="8, 0"
+                                           Foreground="{TemplateBinding Foreground}"
+                                           FontSize="{TemplateBinding FontSize}">
+                                    <ContentPresenter Content="{TemplateBinding Content}" />
+                                </TextBlock>
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{StaticResource LightGrayColor}" />
+                                    <Setter Property="Cursor" Value="Hand"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- AccentButton -->
+            <Style x:Key="AccentButton" TargetType="{x:Type Button}">
+                <Setter Property="Background" Value="{StaticResource LightGrayColor}" />
+                <Setter Property="Foreground" Value="{StaticResource DarkTextColor}" />
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Height" Value="32" />
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border CornerRadius="4" Background="{TemplateBinding Background}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    BorderBrush="{TemplateBinding BorderBrush}">
+                                <TextBlock TextAlignment="Center"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           Padding="8, 0"
+                                           Foreground="{TemplateBinding Foreground}"
+                                           FontSize="{TemplateBinding FontSize}">
+                                    <ContentPresenter Content="{TemplateBinding Content}" />
+                                </TextBlock>
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{StaticResource DarkGrayColor}" />
+                                    <Setter Property="Cursor" Value="Hand"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
         </ResourceDictionary>
 
     </Application.Resources>
