@@ -106,7 +106,44 @@ namespace CrosswordApp
         
         void FinishButton_Click(object sender, RoutedEventArgs e)
         {
+            var solveResult = IsSolved;
+            MessageBox.Show(solveResult.ToString());
+            
             (Parent as MainWindow).Content = new MainMenuPage();
+        }
+
+        bool IsSolved
+        {
+            get
+            {
+                var size = crossword.Size;
+                
+                var cells = new char[size.x, size.y];
+                foreach (var letterTextBox in CrosswordGrid.Children)
+                {
+                    if (!(letterTextBox is TextBox tb))
+                        continue;
+                    var x = (int)tb.GetValue(Grid.ColumnProperty);
+                    var y = (int)tb.GetValue(Grid.RowProperty);
+                    if (tb.Text.Length < 1)
+                        return false;
+                    cells[x, y] = tb.Text.ToLower()[0];
+                }
+
+                foreach (var placement in crossword.placements)
+                {
+                    for (var i = 0; i < placement.Width; ++i)
+                    {
+                        for (var j = 0; j < placement.Height; ++j)
+                        {
+                            (int x, int y) pos = (placement.x + i, placement.y + j);
+                            if (cells[pos.x, pos.y] != crossword.words[placement.wordIndex].word[placement.isVertical ? j : i])
+                                return false;
+                        }
+                    }
+                }
+                return true;
+            }
         }
     }
 }

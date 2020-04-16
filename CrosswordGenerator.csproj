@@ -154,10 +154,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\AddIcon.png" />
-    <Resource Include="Icons\CloseIcon.png" />
+    <Content Include="TestData\Кроссворд_ТРПО(30).json" />
+    <Content Include="TestData\Кроссворд_Фрукты(3).json" />
+    <Content Include="TestData\Слова_ТРПО(30).json" />
+    <Content Include="TestData\Слова_Фрукты(3).json" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\MaterialDesignThemes.3.1.0\build\MaterialDesignThemes.targets" Condition="Exists('packages\MaterialDesignThemes.3.1.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

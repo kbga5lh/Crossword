@@ -7,7 +7,7 @@
       mc:Ignorable="d"
       Title="MainMenuPage"
       Background="{StaticResource LightGrayColor}">
-      <StackPanel Orientation="Horizontal"
+      <StackPanel Orientation="Vertical"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center">
             <Button x:Name="SolveCrosswordButton"
@@ -19,8 +19,7 @@
             
             <Button x:Name="GenerateCrosswordButton"
                     Style="{StaticResource SecondaryButton}"
-                    Click="GenerateCrosswordButton_OnClick"
-                    Foreground="{StaticResource DarkTextColor}">
+                    Click="GenerateCrosswordButton_OnClick">
                   Создать кроссворд
             </Button>
       </StackPanel>
