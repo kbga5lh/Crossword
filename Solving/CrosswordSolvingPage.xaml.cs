@@ -21,18 +21,18 @@ namespace CrosswordApp
     public partial class CrosswordSolvingPage : Page
     {
         Crossword crossword;
-        
+
         public CrosswordSolvingPage(Crossword crossword)
         {
             InitializeComponent();
 
             this.crossword = crossword;
-            
+
             FillGrid(24);
 
             DefinitionsTextBlock.Text = this.crossword.GetDefinitionsString();
         }
-        
+
         void FillGrid(int cellSize)
         {
             var size = crossword.Size;
@@ -40,10 +40,10 @@ namespace CrosswordApp
             CrosswordGrid.Children.Clear();
             CrosswordGrid.RowDefinitions.Clear();
             for (var i = 0; i < size.y; ++i)
-                CrosswordGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(cellSize) });
+                CrosswordGrid.RowDefinitions.Add(new RowDefinition {Height = new GridLength(cellSize)});
             CrosswordGrid.ColumnDefinitions.Clear();
             for (var i = 0; i < size.x; ++i)
-                CrosswordGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(cellSize) });
+                CrosswordGrid.ColumnDefinitions.Add(new ColumnDefinition {Width = new GridLength(cellSize)});
 
             var cells = new bool[size.x, size.y];
             foreach (var placement in crossword.placements)
@@ -98,51 +98,64 @@ namespace CrosswordApp
                 CrosswordGrid.Children.Add(b);
             }
         }
-        
+
         void BackButton_Click(object sender, RoutedEventArgs e)
         {
             (Parent as MainWindow).Content = new MainMenuPage();
         }
-        
+
         void FinishButton_Click(object sender, RoutedEventArgs e)
         {
-            var solveResult = IsSolved;
-            MessageBox.Show(solveResult.ToString());
-            
-            (Parent as MainWindow).Content = new MainMenuPage();
+            var solvedWords = SolvedWords;
+            if (solvedWords == crossword.words.Count)
+            {
+                MessageBox.Show("Вы правильно решили кроссворд!");
+            }
+            else
+            {
+                MessageBox.Show($"К сожалению, Вы отгадали только {solvedWords} из {crossword.words.Count} слов. Попробуйте еще раз.");
+            }
         }
 
-        bool IsSolved
+        int SolvedWords
         {
             get
             {
+                var result = 0;
                 var size = crossword.Size;
-                
+
                 var cells = new char[size.x, size.y];
                 foreach (var letterTextBox in CrosswordGrid.Children)
                 {
                     if (!(letterTextBox is TextBox tb))
                         continue;
-                    var x = (int)tb.GetValue(Grid.ColumnProperty);
-                    var y = (int)tb.GetValue(Grid.RowProperty);
+                    var x = (int) tb.GetValue(Grid.ColumnProperty);
+                    var y = (int) tb.GetValue(Grid.RowProperty);
                     if (tb.Text.Length < 1)
-                        return false;
+                        continue;
                     cells[x, y] = tb.Text.ToLower()[0];
                 }
 
                 foreach (var placement in crossword.placements)
                 {
-                    for (var i = 0; i < placement.Width; ++i)
+                    var solvedCorrectly = true;
+                    for (var i = 0; i < placement.Width && solvedCorrectly; ++i)
                     {
-                        for (var j = 0; j < placement.Height; ++j)
+                        for (var j = 0; j < placement.Height && solvedCorrectly; ++j)
                         {
                             (int x, int y) pos = (placement.x + i, placement.y + j);
-                            if (cells[pos.x, pos.y] != crossword.words[placement.wordIndex].word[placement.isVertical ? j : i])
-                                return false;
+                            if (cells[pos.x, pos.y] !=
+                                crossword.words[placement.wordIndex].word[placement.isVertical ? j : i])
+                            {
+                                solvedCorrectly = false;
+                            }
                         }
                     }
+                    if (solvedCorrectly)
+                        result++;
                 }
-                return true;
+
+                return result;
             }
         }
     }

@@ -7,14 +7,14 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <materialDesign:CustomColorTheme BaseTheme="Light" PrimaryColor="#4EF199" SecondaryColor="#F5F5F5" />
+                <materialDesign:CustomColorTheme BaseTheme="Light" PrimaryColor="#29B6F6" SecondaryColor="#F5F5F5" />
                 <ResourceDictionary
                     Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <Brush x:Key="MainColor">#4EF199</Brush>
-            <Brush x:Key="MainDarkerColor">#04AA60</Brush>
-            <Brush x:Key="MainLighterColor">#83FFC0</Brush>
+            <Brush x:Key="MainColor">#29B6F6</Brush>
+            <Brush x:Key="MainDarkerColor">#03A9F4</Brush>
+            <Brush x:Key="MainLighterColor">#4FC3F7</Brush>
             <Brush x:Key="DarkTextColor">#2C2C2C</Brush>
             <Brush x:Key="IntermediateColor">#444444</Brush>
             <Brush x:Key="LightGrayColor">#F5F5F5</Brush>
@@ -126,7 +126,7 @@
             <!-- PrimaryButton -->
             <Style x:Key="PrimaryButton" TargetType="{x:Type Button}">
                 <Setter Property="Background" Value="{StaticResource MainColor}" />
-                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Foreground" Value="{StaticResource DarkTextColor}" />
                 <Setter Property="FontSize" Value="13" />
                 <Setter Property="FontWeight" Value="Bold" />
                 <Setter Property="Height" Value="32" />
@@ -153,7 +153,6 @@
                                 </Trigger>
                                 <Trigger Property="IsEnabled" Value="False">
                                     <Setter Property="Background" Value="{StaticResource IntermediateColor}" />
-                                    <Setter Property="Foreground" Value="{StaticResource DarkTextColor}" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>

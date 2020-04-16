@@ -65,7 +65,13 @@
             <ScrollViewer Padding="16 16"
                           VerticalScrollBarVisibility="Auto">
                 <StackPanel Orientation="Vertical">
+                    <TextBlock FontWeight="Bold"
+                               Margin="0 8">
+                        Определения
+                    </TextBlock>
+
                     <TextBlock x:Name="DefinitionsTextBlock"
+                               Margin="0 8"
                                TextWrapping="Wrap" />
                 </StackPanel>
             </ScrollViewer>
@@ -94,15 +100,14 @@
                 <Button x:Name="FinishButton"
                         Margin="8"
                         Grid.Column="1"
-                        Foreground="{StaticResource DarkTextColor}"
                         HorizontalAlignment="Stretch"
                         Style="{StaticResource PrimaryButton}"
                         Click="FinishButton_Click">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="0 0" VerticalAlignment="Center">
-                            Завершить
+                            Проверить
                         </TextBlock>
-                        <materialDesign:PackIcon Kind="ChevronRight" Margin="8 0 0 0" VerticalAlignment="Center" />
+                        <materialDesign:PackIcon Kind="Check" Margin="8 0 0 0" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
             </Grid>
