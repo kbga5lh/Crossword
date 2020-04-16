@@ -1,0 +1,1 @@
+{"name":"Фрукты (просто)","words":[{"Item1":"яблоко","Item2":"Красный"},{"Item1":"апельсин","Item2":"Оранжевый"},{"Item1":"банан","Item2":"Желтый"}],"placements":[{"x":3,"y":0,"wordIndex":0,"index":1,"wordLength":6,"isVertical":true},{"x":0,"y":2,"wordIndex":1,"index":2,"wordLength":8,"isVertical":false},{"x":0,"y":1,"wordIndex":2,"index":3,"wordLength":5,"isVertical":true}]}

@@ -13,16 +13,100 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CrosswordGenerator.Solving
+namespace CrosswordApp
 {
     /// <summary>
     /// Логика взаимодействия для CrosswordSolvingPage.xaml
     /// </summary>
     public partial class CrosswordSolvingPage : Page
     {
-        public CrosswordSolvingPage()
+        Crossword crossword;
+        
+        public CrosswordSolvingPage(Crossword crossword)
         {
             InitializeComponent();
+
+            this.crossword = crossword;
+            
+            FillGrid(24);
+
+            DefinitionsTextBlock.Text = this.crossword.GetDefinitionsString();
+        }
+        
+        void FillGrid(int cellSize)
+        {
+            var size = crossword.Size;
+
+            CrosswordGrid.Children.Clear();
+            CrosswordGrid.RowDefinitions.Clear();
+            for (var i = 0; i < size.y; ++i)
+                CrosswordGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(cellSize) });
+            CrosswordGrid.ColumnDefinitions.Clear();
+            for (var i = 0; i < size.x; ++i)
+                CrosswordGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(cellSize) });
+
+            var cells = new bool[size.x, size.y];
+            foreach (var placement in crossword.placements)
+            {
+                for (var i = 0; i < placement.Width; ++i)
+                {
+                    for (var j = 0; j < placement.Height; ++j)
+                    {
+                        (int x, int y) pos = (placement.x + i, placement.y + j);
+                        if (cells[pos.x, pos.y])
+                            continue;
+
+                        var a = new TextBox
+                        {
+                            VerticalContentAlignment = VerticalAlignment.Center,
+                            HorizontalContentAlignment = HorizontalAlignment.Center,
+                            Style = Resources["CrosswordLetterTextBox"] as Style,
+                        };
+                        a.GotFocus += (sender, args) =>
+                        {
+                            if (!(sender is TextBox tb)) return;
+                            tb.SelectAll();
+                        };
+                        a.PreviewMouseLeftButtonDown += (sender, args) =>
+                        {
+                            if (!(sender is TextBox tb)) return;
+                            if (tb.IsKeyboardFocusWithin) return;
+                            args.Handled = true;
+                            tb.Focus();
+                        };
+                        a.MaxLength = 1;
+
+                        a.SetValue(Grid.RowProperty, pos.y);
+                        a.SetValue(Grid.ColumnProperty, pos.x);
+                        CrosswordGrid.Children.Add(a);
+
+                        cells[pos.x, pos.y] = true;
+                    }
+                }
+
+                var b = new TextBlock
+                {
+                    Text = placement.index.ToString(),
+                    VerticalAlignment = VerticalAlignment.Top,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    Margin = new Thickness(2, 2, 0, 0),
+                    FontSize = 7,
+                    IsHitTestVisible = false,
+                };
+                b.SetValue(Grid.RowProperty, placement.y);
+                b.SetValue(Grid.ColumnProperty, placement.x);
+                CrosswordGrid.Children.Add(b);
+            }
+        }
+        
+        void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            (Parent as MainWindow).Content = new MainMenuPage();
+        }
+        
+        void FinishButton_Click(object sender, RoutedEventArgs e)
+        {
+            (Parent as MainWindow).Content = new MainMenuPage();
         }
     }
 }

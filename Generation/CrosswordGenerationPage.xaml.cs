@@ -38,11 +38,7 @@ namespace CrosswordApp
 
         void Generate()
         {
-            var sw = new Stopwatch();
-            sw.Start();
             crossword = crosswordGenerator.Generate();
-            sw.Stop();
-            CrosswordInfoTextBlock.Text = $"Сгенерировано за {sw.Elapsed.TotalMilliseconds} мс";
             
             crossword.placements.Sort((v1, v2) => v2.index > v1.index ? -1 : 1);
 

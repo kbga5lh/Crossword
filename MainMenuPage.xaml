@@ -5,10 +5,20 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:CrosswordApp"
       mc:Ignorable="d"
-      Title="MainMenuPage">
-      <StackPanel Orientation="Horizontal">
-            <Button x:Name="GenerateCrosswordButton"
+      Title="MainMenuPage"
+      Background="{StaticResource LightGrayColor}">
+      <StackPanel Orientation="Horizontal"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
+            <Button x:Name="SolveCrosswordButton"
                     Style="{StaticResource PrimaryButton}"
+                    Click="SolveCrosswordButton_OnClick"
+                    Foreground="{StaticResource DarkTextColor}">
+                  Решить кроссворд
+            </Button>
+            
+            <Button x:Name="GenerateCrosswordButton"
+                    Style="{StaticResource SecondaryButton}"
                     Click="GenerateCrosswordButton_OnClick"
                     Foreground="{StaticResource DarkTextColor}">
                   Создать кроссворд
