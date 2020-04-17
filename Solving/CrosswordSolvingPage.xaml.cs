@@ -33,7 +33,17 @@ namespace CrosswordApp
 
             CrosswordNameTextBlock.Text = this.crossword.name;
 
-            DefinitionsTextBlock.Text = this.crossword.GetDefinitionsString();
+            foreach (var placement in crossword.placements)
+            {
+                if (placement.isVertical)
+                {
+                    DefinitionsVerticalTextBlock.Text += $"{placement.index} - {crossword.words[placement.wordIndex].definition}\n\n";
+                }
+                else
+                {
+                    DefinitionsHorizontalTextBlock.Text += $"{placement.index} - {crossword.words[placement.wordIndex].definition}\n\n";
+                }
+            }
         }
 
         void FillGrid(int cellSize)

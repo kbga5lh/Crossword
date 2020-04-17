@@ -80,10 +80,19 @@
                     
                     <TextBlock FontWeight="Bold"
                                Margin="0 8">
-                        Определения
+                        По горизонтали
                     </TextBlock>
 
-                    <TextBlock x:Name="DefinitionsTextBlock"
+                    <TextBlock x:Name="DefinitionsHorizontalTextBlock"
+                               Margin="0 8"
+                               TextWrapping="Wrap" />
+                    
+                    <TextBlock FontWeight="Bold"
+                               Margin="0 8">
+                        По вертикали
+                    </TextBlock>
+
+                    <TextBlock x:Name="DefinitionsVerticalTextBlock"
                                Margin="0 8"
                                TextWrapping="Wrap" />
                 </StackPanel>

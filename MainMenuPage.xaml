@@ -13,13 +13,15 @@
             <Button x:Name="SolveCrosswordButton"
                     Style="{StaticResource PrimaryButton}"
                     Click="SolveCrosswordButton_OnClick"
-                    Foreground="{StaticResource DarkTextColor}">
+                    Foreground="{StaticResource DarkTextColor}"
+                    Margin="8">
                   Решить кроссворд
             </Button>
             
             <Button x:Name="GenerateCrosswordButton"
                     Style="{StaticResource SecondaryButton}"
-                    Click="GenerateCrosswordButton_OnClick">
+                    Click="GenerateCrosswordButton_OnClick"
+                    Margin="8">
                   Создать кроссворд
             </Button>
       </StackPanel>
