@@ -30,6 +30,8 @@ namespace CrosswordApp
 
             FillGrid(24);
 
+            CrosswordNameTextBlock.Text = this.crossword.name;
+
             DefinitionsTextBlock.Text = this.crossword.GetDefinitionsString();
         }
 
@@ -73,6 +75,48 @@ namespace CrosswordApp
                             if (tb.IsKeyboardFocusWithin) return;
                             args.Handled = true;
                             tb.Focus();
+                        };
+                        a.PreviewKeyDown += (sender, args) =>
+                        {
+                            if (!(sender is TextBox tb)) return;
+                            var x = (int)tb.GetValue(Grid.ColumnProperty);
+                            var y = (int)tb.GetValue(Grid.RowProperty);
+                            var x1 = x;
+                            var y1 = y;
+                            switch (args.Key)
+                            {
+                                case Key.Left:
+                                    x1--;
+                                    break;
+                                case Key.Right:
+                                    x1++;
+                                    break;
+                                case Key.Up:
+                                    y1--;
+                                    break;
+                                case Key.Down:
+                                    y1++;
+                                    break;
+                                case Key.Tab:
+                                    args.Handled = true;
+                                    return;
+                                default:
+                                    return;
+                            }
+
+                            TextBox tb1 = null;
+                            foreach (var t in CrosswordGrid.Children)
+                            {
+                                if (!(t is TextBox textBox)) continue;
+                                var tx = (int)textBox.GetValue(Grid.ColumnProperty);
+                                var ty = (int)textBox.GetValue(Grid.RowProperty);
+                                if (tx != x1 || ty != y1) continue;
+                                tb1 = textBox;
+                                break;
+                            }
+
+                            args.Handled = true;
+                            tb1?.Focus();
                         };
                         a.MaxLength = 1;
 

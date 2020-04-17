@@ -66,6 +66,19 @@
                           VerticalScrollBarVisibility="Auto">
                 <StackPanel Orientation="Vertical">
                     <TextBlock FontWeight="Bold"
+                               Margin="0 8"
+                               x:Name="CrosswordNameTextBlock"
+                               TextWrapping="Wrap"
+                               Style="{DynamicResource MaterialDesignHeadline6TextBlock}">
+                        Кроссворд
+                    </TextBlock>
+                    
+                    <Separator HorizontalAlignment="Stretch"
+                               Height="1"
+                               Margin="0 8"
+                               Background="{StaticResource LightGrayColor}" />
+                    
+                    <TextBlock FontWeight="Bold"
                                Margin="0 8">
                         Определения
                     </TextBlock>
