@@ -13,7 +13,6 @@
             <Button x:Name="SolveCrosswordButton"
                     Style="{StaticResource PrimaryButton}"
                     Click="SolveCrosswordButton_OnClick"
-                    Foreground="{StaticResource DarkTextColor}"
                     Margin="8">
                   Решить кроссворд
             </Button>

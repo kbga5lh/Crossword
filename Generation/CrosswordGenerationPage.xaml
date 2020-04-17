@@ -124,7 +124,6 @@
                     <Button x:Name="SaveButton"
                             Margin="0 8"
                             Style="{StaticResource PrimaryButton}"
-                            Foreground="{StaticResource DarkTextColor}"
                             Click="SaveButton_Click">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Download" Margin="0 0 8 0" VerticalAlignment="Center" />
@@ -165,7 +164,6 @@
                     <Button x:Name="SaveImageButton"
                             Margin="0 8"
                             Style="{StaticResource PrimaryButton}"
-                            Foreground="{StaticResource DarkTextColor}"
                             Click="SaveImageButton_Click">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Download" Margin="0 0 8 0" VerticalAlignment="Center" />
@@ -202,7 +200,6 @@
                 <Button x:Name="FinishButton"
                         Margin="8"
                         Grid.Column="1"
-                        Foreground="{StaticResource DarkTextColor}"
                         HorizontalAlignment="Stretch"
                         Style="{StaticResource PrimaryButton}"
                         Click="FinishButton_OnClick">

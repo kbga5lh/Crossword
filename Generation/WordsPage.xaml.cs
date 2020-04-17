@@ -135,9 +135,12 @@ namespace CrosswordApp
 
             if (wordsAmount < 1 || wordsAmount > 500)
             {
-                return;
+                MessageBox.Show("Количество слов должно быть > 0 и <= 500");
+                WordsAmountTextBox.Text = WordsAndDefinitionsElement.WordsStackPanel.Children.Count.ToString();
+                WordsAmountTextBox.SelectionStart = WordsAmountTextBox.Text.Length;
             }
-            WordsAndDefinitionsElement.Resize(wordsAmount);
+            else
+                WordsAndDefinitionsElement.Resize(wordsAmount);
         }
 
         void WordsAmountTextBox_OnLostFocus(object sender, RoutedEventArgs e)

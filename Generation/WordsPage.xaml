@@ -165,7 +165,6 @@
                 <Button x:Name="NextButton"
                     Margin="8"
                 Grid.Column="1"
-                    Foreground="{StaticResource DarkTextColor}"
                     HorizontalAlignment="Stretch"
                     Style="{StaticResource PrimaryButton}"
                     Click="GenerateButton_Click">

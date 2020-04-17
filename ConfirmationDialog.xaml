@@ -8,7 +8,13 @@
         Width="450"
         Height="200"
         ResizeMode="NoResize"
-        Background="White">
+        Background="White"
+        TextElement.Foreground="{StaticResource DarkTextColor}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"
+        FontFamily="{StaticResource Montserrat}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

@@ -7,14 +7,14 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <materialDesign:CustomColorTheme BaseTheme="Light" PrimaryColor="#29B6F6" SecondaryColor="#F5F5F5" />
+                <materialDesign:CustomColorTheme BaseTheme="Light" PrimaryColor="#FDD95B" SecondaryColor="#F5F5F5" />
                 <ResourceDictionary
                     Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <Brush x:Key="MainColor">#29B6F6</Brush>
-            <Brush x:Key="MainDarkerColor">#03A9F4</Brush>
-            <Brush x:Key="MainLighterColor">#4FC3F7</Brush>
+            <Brush x:Key="MainColor">#FDD95B</Brush>
+            <Brush x:Key="MainDarkerColor">#EECD56</Brush>
+            <Brush x:Key="MainLighterColor">#FFE178</Brush>
             <Brush x:Key="DarkTextColor">#2C2C2C</Brush>
             <Brush x:Key="IntermediateColor">#444444</Brush>
             <Brush x:Key="LightGrayColor">#F5F5F5</Brush>
