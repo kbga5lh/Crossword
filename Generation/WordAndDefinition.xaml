@@ -28,7 +28,8 @@
                     Style="{StaticResource InputTextBox}"
                      Tag="Слово"
                      Grid.Column="1"
-                                  Background="White">
+                                  Background="White"
+                    TextChanged="WordTextBox_OnTextChanged">
 
         </TextBox>
 

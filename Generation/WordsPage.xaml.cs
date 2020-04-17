@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using CrosswordGenerator;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 
@@ -24,21 +25,44 @@ namespace CrosswordApp
 
         void BackButton_Click(object sender, RoutedEventArgs e)
         {
+            var confirmationDialog = new ConfirmationDialog("Выход в меню", "Вы уверены, что хотите вернуться в меню? Все несохраненные изменения пропадут.");
+            if (confirmationDialog.ShowDialog() != true)
+                return;
+            
             (Parent as MainCrosswordGenerationPage).ToMenuPage();
         }
 
         void GenerateButton_Click(object sender, RoutedEventArgs e)
         {
             var words = ReadFromTextBoxes();
+            if (words == null)
+                return;
 
             (Parent as MainCrosswordGenerationPage).ToCrosswordPage(new CrosswordPage(words, NameTextBox.Text));
         }
 
         List<(string, string)> ReadFromTextBoxes()
         {
-            return (from WordAndDefinition v
-                in WordsAndDefinitionsElement.WordsStackPanel.Children
-                select (v.WordTextBox.Text, v.DefinitionTextBox.Text)).ToList();
+            var list = new List<(string, string)>();
+            foreach (var v in WordsAndDefinitionsElement.WordsStackPanel.Children)
+            {
+                if (!(v is WordAndDefinition wd)) continue;
+                if (string.IsNullOrEmpty(wd.WordTextBox.Text))
+                {
+                    MessageBox.Show("Не все поля заполнены!");
+                    wd.WordTextBox.Focus();
+                    return null;
+                }
+                if (string.IsNullOrEmpty(wd.DefinitionTextBox.Text))
+                {
+                    MessageBox.Show("Не все поля заполнены!");
+                    wd.DefinitionTextBox.Focus();
+                    return null;
+                }
+                list.Add((wd.WordTextBox.Text, wd.DefinitionTextBox.Text));
+            }
+
+            return list;
         }
 
         static List<(string, string)> ReadFromFile(string path)
@@ -52,34 +76,48 @@ namespace CrosswordApp
 
         void FillButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var fileDialog = new OpenFileDialog {Filter = "JSON file|*.json"};
-            if (fileDialog.ShowDialog() != true)
-                return;
-            
-            var words = ReadFromFile(fileDialog.FileName);
-            WordsAndDefinitionsElement.WordsStackPanel.Children.Clear();
-            foreach (var (word, definition) in words)
+            try
             {
-                WordsAndDefinitionsElement.AddWordAndDefinition();
-                var wd = WordsAndDefinitionsElement.WordsStackPanel.Children[
-                    WordsAndDefinitionsElement.WordsStackPanel.Children.Count - 1] as WordAndDefinition;
-                wd.WordTextBox.Text = word;
-                wd.DefinitionTextBox.Text = definition;
-            }
+                var fileDialog = new OpenFileDialog {Filter = "JSON file|*.json"};
+                if (fileDialog.ShowDialog() != true)
+                    return;
 
-            WordsAmountTextBox.Text = WordsAndDefinitionsElement.WordsStackPanel.Children.Count.ToString();
+                var words = ReadFromFile(fileDialog.FileName);
+                WordsAndDefinitionsElement.WordsStackPanel.Children.Clear();
+                foreach (var (word, definition) in words)
+                {
+                    WordsAndDefinitionsElement.AddWordAndDefinition();
+                    var wd = WordsAndDefinitionsElement.WordsStackPanel.Children[
+                        WordsAndDefinitionsElement.WordsStackPanel.Children.Count - 1] as WordAndDefinition;
+                    wd.WordTextBox.Text = word;
+                    wd.DefinitionTextBox.Text = definition;
+                }
+
+                WordsAmountTextBox.Text = WordsAndDefinitionsElement.WordsStackPanel.Children.Count.ToString();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Произошла ошибка при считывании данных из файла");
+            }
         }
 
         void SaveButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var fileDialog = new SaveFileDialog {Filter = "JSON file|*.json"};
-            if (fileDialog.ShowDialog() != true)
-                return;
-            
-            var words = ReadFromTextBoxes();
-            var jsonWords = JsonConvert.SerializeObject(words);
-            
-            File.WriteAllText(fileDialog.FileName, jsonWords);
+            try
+            {
+                var fileDialog = new SaveFileDialog {Filter = "JSON file|*.json"};
+                if (fileDialog.ShowDialog() != true)
+                    return;
+
+                var words = ReadFromTextBoxes();
+                var jsonWords = JsonConvert.SerializeObject(words);
+
+                File.WriteAllText(fileDialog.FileName, jsonWords);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Произошла ошибка при записи данных в файл");
+            }
         }
 
         void WordsAmountTextBox_OnKeyDown(object sender, KeyEventArgs e)
