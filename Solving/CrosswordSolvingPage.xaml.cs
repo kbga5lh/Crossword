@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CrosswordGenerator;
 
 namespace CrosswordApp
 {
@@ -145,6 +146,10 @@ namespace CrosswordApp
 
         void BackButton_Click(object sender, RoutedEventArgs e)
         {
+            var confirmationDialog = new ConfirmationDialog("Выход в меню", "Вы уверены, что хотите вернуться в меню? Ваш прогресс в этом кроссворде не сохранится.");
+            if (confirmationDialog.ShowDialog() != true)
+                return;
+            
             (Parent as MainWindow).Content = new MainMenuPage();
         }
 
