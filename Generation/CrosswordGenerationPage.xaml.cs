@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using CrosswordGenerator;
 using Newtonsoft.Json;
 
 namespace CrosswordApp
@@ -176,6 +177,12 @@ namespace CrosswordApp
 
         void FinishButton_OnClick(object sender, RoutedEventArgs e)
         {
+            var messageBoxResult = System.Windows.MessageBox.Show(
+                "Вы уверены, что хотите вернуться в меню? Все несохраненные изменения пропадут.", "Выход в меню",
+                System.Windows.MessageBoxButton.YesNo);
+            if (messageBoxResult != MessageBoxResult.Yes)
+                return;
+            
             (Parent as MainCrosswordGenerationPage).ToMenuPage();
         }
     }

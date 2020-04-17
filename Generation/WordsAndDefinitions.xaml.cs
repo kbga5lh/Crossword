@@ -6,6 +6,9 @@ namespace CrosswordApp
 {
     public partial class WordsAndDefinitions : UserControl
     {
+        public const int maxCount = 200;
+        public int Count => WordsStackPanel.Children.Count;
+
         public event EventHandler CountChange;
         
         public WordsAndDefinitions()
@@ -17,8 +20,11 @@ namespace CrosswordApp
 
         public void AddWordAndDefinition()
         {
+            if (Count >= maxCount)
+                return;
+
             var wd = new WordAndDefinition();
-            wd.Index.Text = (WordsStackPanel.Children.Count + 1).ToString();
+            wd.Index.Text = (Count + 1).ToString();
             wd.CloseButton.Click += (object sender, RoutedEventArgs e) =>
             {
                 if (WordsStackPanel.Children.Count <= 1)
@@ -26,7 +32,7 @@ namespace CrosswordApp
 
                 WordsStackPanel.Children.Remove(wd);
 
-                for (var i = 0; i < WordsStackPanel.Children.Count; ++i)
+                for (var i = 0; i < Count; ++i)
                 {
                     (WordsStackPanel.Children[i] as WordAndDefinition).Index.Text = (i + 1).ToString();
                 }
@@ -43,13 +49,13 @@ namespace CrosswordApp
 
         public void Resize(int wordsAmount)
         {
-            if (wordsAmount < WordsStackPanel.Children.Count)
+            if (wordsAmount < Count)
             {
-                WordsStackPanel.Children.RemoveRange(wordsAmount, WordsStackPanel.Children.Count - wordsAmount);
+                WordsStackPanel.Children.RemoveRange(wordsAmount, Count - wordsAmount);
             }
             else
             {
-                for (var i = 0; WordsStackPanel.Children.Count < wordsAmount; ++i)
+                for (var i = 0; Count < wordsAmount; ++i)
                 {
                     AddWordAndDefinition();
                 }

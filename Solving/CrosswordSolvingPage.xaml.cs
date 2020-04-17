@@ -156,8 +156,11 @@ namespace CrosswordApp
 
         void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            var confirmationDialog = new ConfirmationDialog("Выход в меню", "Вы уверены, что хотите вернуться в меню? Ваш прогресс в этом кроссворде не сохранится.");
-            if (confirmationDialog.ShowDialog() != true)
+            var messageBoxResult = System.Windows.MessageBox.Show(
+                "Вы уверены, что хотите вернуться в меню? Ваш прогресс в этом кроссворде не сохранится.",
+                "Выход в меню",
+                System.Windows.MessageBoxButton.YesNo);
+            if (messageBoxResult != MessageBoxResult.Yes)
                 return;
             
             (Parent as MainWindow).Content = new MainMenuPage();

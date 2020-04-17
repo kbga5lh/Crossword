@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,17 +21,23 @@ namespace CrosswordApp
 
         void SolveCrosswordButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var fileDialog = new OpenFileDialog
+            try
             {
-                Filter = "JSON file|*.json",
-            };
-            if (fileDialog.ShowDialog() != true)
-                return;
+                var fileDialog = new OpenFileDialog
+                {
+                    Filter = "JSON file|*.json",
+                };
+                if (fileDialog.ShowDialog() != true)
+                    return;
 
-            var jsonCrossword = File.ReadAllText(fileDialog.FileName);
-            var crossword = JsonConvert.DeserializeObject<Crossword>(jsonCrossword);
-
-            (Parent as MainWindow).Content = new CrosswordSolvingPage(crossword);
+                var jsonCrossword = File.ReadAllText(fileDialog.FileName);
+                var crossword = JsonConvert.DeserializeObject<Crossword>(jsonCrossword);
+                (Parent as MainWindow).Content = new CrosswordSolvingPage(crossword);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Произошла ошибка при считывании данных из файла");
+            }
         }
     }
 }

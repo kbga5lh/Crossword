@@ -19,16 +19,19 @@ namespace CrosswordApp
 
             WordsAndDefinitionsElement.CountChange += (sender, args) =>
             {
-                WordsAmountTextBox.Text = WordsAndDefinitionsElement.WordsStackPanel.Children.Count.ToString();
+                WordsAmountTextBox.Text = WordsAndDefinitionsElement.Count.ToString();
+                WordsAmountTextBox.SelectionStart = WordsAmountTextBox.Text.Length;
             };
         }
 
         void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            var confirmationDialog = new ConfirmationDialog("Выход в меню", "Вы уверены, что хотите вернуться в меню? Все несохраненные изменения пропадут.");
-            if (confirmationDialog.ShowDialog() != true)
+            var messageBoxResult = System.Windows.MessageBox.Show(
+                "Вы уверены, что хотите вернуться в меню? Все несохраненные изменения пропадут.", "Выход в меню",
+                System.Windows.MessageBoxButton.YesNo);
+            if (messageBoxResult != MessageBoxResult.Yes)
                 return;
-            
+
             (Parent as MainCrosswordGenerationPage).ToMenuPage();
         }
 
@@ -88,12 +91,12 @@ namespace CrosswordApp
                 {
                     WordsAndDefinitionsElement.AddWordAndDefinition();
                     var wd = WordsAndDefinitionsElement.WordsStackPanel.Children[
-                        WordsAndDefinitionsElement.WordsStackPanel.Children.Count - 1] as WordAndDefinition;
+                        WordsAndDefinitionsElement.Count - 1] as WordAndDefinition;
                     wd.WordTextBox.Text = word;
                     wd.DefinitionTextBox.Text = definition;
                 }
 
-                WordsAmountTextBox.Text = WordsAndDefinitionsElement.WordsStackPanel.Children.Count.ToString();
+                WordsAmountTextBox.Text = WordsAndDefinitionsElement.Count.ToString();
             }
             catch (Exception)
             {
@@ -130,13 +133,16 @@ namespace CrosswordApp
         {
             if (!int.TryParse(WordsAmountTextBox.Text, out var wordsAmount))
             {
+                MessageBox.Show("Вы ввели не число");
+                WordsAmountTextBox.Text = WordsAndDefinitionsElement.Count.ToString();
+                WordsAmountTextBox.SelectionStart = WordsAmountTextBox.Text.Length;
                 return;
             }
 
-            if (wordsAmount < 1 || wordsAmount > 500)
+            if (wordsAmount < 1 || wordsAmount > WordsAndDefinitions.maxCount)
             {
                 MessageBox.Show("Количество слов должно быть > 0 и <= 500");
-                WordsAmountTextBox.Text = WordsAndDefinitionsElement.WordsStackPanel.Children.Count.ToString();
+                WordsAmountTextBox.Text = WordsAndDefinitionsElement.Count.ToString();
                 WordsAmountTextBox.SelectionStart = WordsAmountTextBox.Text.Length;
             }
             else
