@@ -74,6 +74,34 @@ namespace CrosswordApp
                             VerticalContentAlignment = VerticalAlignment.Center,
                             HorizontalContentAlignment = HorizontalAlignment.Center,
                             Style = Resources["CrosswordLetterTextBox"] as Style,
+                            Background = new SolidColorBrush(Color.FromRgb(44, 44, 44)),
+                            BorderThickness = new Thickness(0.5),
+                            BorderBrush = Brushes.White,
+                            Foreground = Brushes.White,
+                        };
+                        a.TextChanged += (sender, args) =>
+                        {
+                            if (!(sender is TextBox tb)) return;
+                            var selectionStart = tb.SelectionStart;
+
+                            var formattedText = tb.Text.ToLower();
+                            for (var k = 0; k < formattedText.Length;)
+                            {
+                                var ch = formattedText[k];
+                                if (ch < 'а' || ch > 'я')
+                                {
+                                    formattedText = formattedText.Remove(k, 1);
+                                    if (k < selectionStart)
+                                        --selectionStart;
+                                }
+                                else
+                                    ++k;
+                            }
+                            if (formattedText != tb.Text)
+                            {
+                                tb.Text = formattedText;
+                                tb.SelectionStart = selectionStart;
+                            }
                         };
                         a.GotFocus += (sender, args) =>
                         {
@@ -147,6 +175,7 @@ namespace CrosswordApp
                     Margin = new Thickness(2, 2, 0, 0),
                     FontSize = 7,
                     IsHitTestVisible = false,
+                    Foreground = Brushes.White,
                 };
                 b.SetValue(Grid.RowProperty, placement.y);
                 b.SetValue(Grid.ColumnProperty, placement.x);

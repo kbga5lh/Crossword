@@ -76,9 +76,9 @@ namespace CrosswordApp
 
                         var c = new Border
                         {
-                            Background = Brushes.White,
+                            Background = new SolidColorBrush(Color.FromRgb(44, 44, 44)),
                             BorderThickness = new Thickness(0.5),
-                            BorderBrush = Brushes.Black,
+                            BorderBrush = Brushes.White,
                         };
                         c.SetValue(Grid.RowProperty, pos.y);
                         c.SetValue(Grid.ColumnProperty, pos.x);
@@ -89,7 +89,8 @@ namespace CrosswordApp
                             Text = crossword.words[placement.wordIndex].word[placement.isVertical ? j : i].ToString(),
                             VerticalAlignment = VerticalAlignment.Center,
                             HorizontalAlignment = HorizontalAlignment.Center,
-                            Visibility = ShowLettersCheckBox.IsChecked == true ? Visibility.Visible : Visibility.Hidden
+                            Visibility = ShowLettersCheckBox.IsChecked == true ? Visibility.Visible : Visibility.Hidden,
+                            Foreground = Brushes.White,
                         };
                         a.SetValue(Grid.RowProperty, pos.y);
                         a.SetValue(Grid.ColumnProperty, pos.x);
@@ -105,7 +106,8 @@ namespace CrosswordApp
                     VerticalAlignment = VerticalAlignment.Top,
                     HorizontalAlignment = HorizontalAlignment.Left,
                     Margin = new Thickness(2, 2, 0, 0),
-                    FontSize = 7
+                    FontSize = 7,
+                    Foreground = Brushes.White,
                 };
                 b.SetValue(Grid.RowProperty, placement.y);
                 b.SetValue(Grid.ColumnProperty, placement.x);
