@@ -88,6 +88,7 @@ namespace CrosswordApp
                             HorizontalAlignment = HorizontalAlignment.Center,
                             Visibility = ShowLettersCheckBox.IsChecked == true ? Visibility.Visible : Visibility.Hidden,
                             Foreground = Brushes.White,
+                            FontWeight = FontWeights.SemiBold,
                         };
                         a.SetValue(Grid.RowProperty, pos.y);
                         a.SetValue(Grid.ColumnProperty, pos.x);

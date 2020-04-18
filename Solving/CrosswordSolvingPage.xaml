@@ -127,7 +127,7 @@
                         Click="FinishButton_Click">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="0 0" VerticalAlignment="Center">
-                            Проверить
+                            Завершить
                         </TextBlock>
                         <materialDesign:PackIcon Kind="Check" Margin="8 0 0 0" VerticalAlignment="Center" />
                     </StackPanel>

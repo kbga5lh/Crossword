@@ -79,6 +79,7 @@ namespace CrosswordApp
                             BorderThickness = new Thickness(0.5),
                             BorderBrush = Brushes.White,
                             Foreground = Brushes.White,
+                            FontWeight = FontWeights.SemiBold,
                         };
                         a.TextChanged += (sender, args) =>
                         {
@@ -238,8 +239,9 @@ namespace CrosswordApp
                         for (var j = 0; j < placement.Height && solvedCorrectly; ++j)
                         {
                             (int x, int y) pos = (placement.x + i, placement.y + j);
-                            if (cells[pos.x, pos.y] !=
-                                crossword.words[placement.wordIndex].word[placement.isVertical ? j : i])
+                            var c1 = cells[pos.x, pos.y];
+                            var c2 = crossword.words[placement.wordIndex].word[placement.isVertical ? j : i];
+                            if (Correct(c1) != Correct(c2))
                             {
                                 solvedCorrectly = false;
                             }
@@ -252,6 +254,11 @@ namespace CrosswordApp
 
                 return result;
             }
+        }
+
+        char Correct(char initial)
+        {
+            return initial == 'ё' ? 'е' : initial;
         }
     }
 }
