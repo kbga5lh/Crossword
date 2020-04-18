@@ -210,38 +210,6 @@ namespace CrosswordApp
             (Parent as MainWindow).Content = new SolvingResultPage(crossword, GetEnteredLetters());
         }
 
-        int SolvedWords
-        {
-            get
-            {
-                var result = 0;
-                var cells = GetEnteredLetters();
-
-                foreach (var placement in crossword.placements)
-                {
-                    var solvedCorrectly = true;
-                    for (var i = 0; i < placement.Width && solvedCorrectly; ++i)
-                    {
-                        for (var j = 0; j < placement.Height && solvedCorrectly; ++j)
-                        {
-                            (int x, int y) pos = (placement.x + i, placement.y + j);
-                            var c1 = cells[pos.x, pos.y];
-                            var c2 = crossword.words[placement.wordIndex].word[placement.isVertical ? j : i];
-                            if (c1 != Correct(c2))
-                            {
-                                solvedCorrectly = false;
-                            }
-                        }
-                    }
-
-                    if (solvedCorrectly)
-                        result++;
-                }
-
-                return result;
-            }
-        }
-
         char[,] GetEnteredLetters()
         {
             var size = crossword.Size;

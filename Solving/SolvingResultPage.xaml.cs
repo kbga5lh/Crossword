@@ -15,6 +15,10 @@ namespace CrosswordApp
 
             this.crossword = crossword;
             this.enteredLetters = enteredLetters;
+
+            CrosswordNameTextBlock.Text = this.crossword.name;
+            var solvedWords = SolvedWords;
+            RightWordsTextBlock.Text = $"{solvedWords} ({(double)solvedWords / (double)crossword.words.Count * 100}%)";
             
             FillGrid(24);
         }
@@ -121,6 +125,37 @@ namespace CrosswordApp
         char Correct(char initial)
         {
             return initial == 'ё' ? 'е' : initial;
+        }
+        
+        int SolvedWords
+        {
+            get
+            {
+                var result = 0;
+
+                foreach (var placement in crossword.placements)
+                {
+                    var solvedCorrectly = true;
+                    for (var i = 0; i < placement.Width && solvedCorrectly; ++i)
+                    {
+                        for (var j = 0; j < placement.Height && solvedCorrectly; ++j)
+                        {
+                            (int x, int y) pos = (placement.x + i, placement.y + j);
+                            var c1 = enteredLetters[pos.x, pos.y];
+                            var c2 = crossword.words[placement.wordIndex].word[placement.isVertical ? j : i];
+                            if (c1 != Correct(c2))
+                            {
+                                solvedCorrectly = false;
+                            }
+                        }
+                    }
+
+                    if (solvedCorrectly)
+                        result++;
+                }
+
+                return result;
+            }
         }
     }
 }

@@ -8,7 +8,7 @@
       mc:Ignorable="d"
       Background="{StaticResource LightGrayColor}"
       Title="SolvingResultPage">
-   <Grid>
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="75" />
             <RowDefinition />
@@ -64,7 +64,34 @@
             <ScrollViewer Padding="16 16"
                           VerticalScrollBarVisibility="Auto">
                 <StackPanel Orientation="Vertical">
+                    <TextBlock FontWeight="Bold"
+                               Margin="0 8"
+                               x:Name="CrosswordNameTextBlock"
+                               TextWrapping="Wrap"
+                               Style="{DynamicResource MaterialDesignHeadline6TextBlock}">
+                        Кроссворд
+                    </TextBlock>
 
+                    <Separator HorizontalAlignment="Stretch"
+                               Height="1"
+                               Margin="0 8"
+                               Background="{StaticResource LightGrayColor}" />
+
+                    <TextBlock FontWeight="Bold"
+                               Margin="0 8">
+                        Результаты
+                    </TextBlock>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="0 8 16 8"
+                                   TextWrapping="Wrap">
+                            Отгадано слов:
+                        </TextBlock>
+                        <TextBlock x:Name="RightWordsTextBlock"
+                                   Margin="0 8"
+                                   TextWrapping="Wrap"
+                                   FontWeight="Bold" />
+                    </StackPanel>
                 </StackPanel>
             </ScrollViewer>
 
