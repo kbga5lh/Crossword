@@ -92,6 +92,9 @@
     <Compile Include="Solving\CrosswordSolvingPage.xaml.cs">
       <DependentUpon>CrosswordSolvingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Solving\SolvingResultPage.xaml.cs">
+      <DependentUpon>SolvingResultPage.xaml</DependentUpon>
+    </Compile>
     <Page Include="Generation\CrosswordGenerationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -123,6 +126,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Solving\SolvingResultPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

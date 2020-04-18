@@ -1,0 +1,93 @@
+<Page x:Class="CrosswordApp.SolvingResultPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:CrosswordApp"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d"
+      Background="{StaticResource LightGrayColor}"
+      Title="SolvingResultPage">
+   <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="CrosswordContent" />
+            <ColumnDefinition Width="400" />
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Row="0"
+                Grid.ColumnSpan="2"
+                Background="{StaticResource DarkTextColor}" />
+
+        <TextBlock Grid.Row="0"
+                   Grid.ColumnSpan="2"
+                   Style="{DynamicResource MaterialDesignHeadline4TextBlock}"
+                   FontWeight="Black"
+                   Margin="40 0"
+                   Foreground="White"
+                   TextWrapping="Wrap"
+                   VerticalAlignment="Center">
+            Решение кроссворда
+        </TextBlock>
+
+        <Border Grid.Row="1"
+                Grid.Column="1"
+                Background="White" />
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <ScrollViewer Padding="8 8"
+                          VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Auto">
+
+                <Grid x:Name="CrosswordGrid"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center" />
+            </ScrollViewer>
+        </Grid>
+
+        <Grid Grid.Row="1"
+              Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <ScrollViewer Padding="16 16"
+                          VerticalScrollBarVisibility="Auto">
+                <StackPanel Orientation="Vertical">
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="FinishButton"
+                        Margin="8"
+                        Grid.Column="1"
+                        HorizontalAlignment="Stretch"
+                        Style="{StaticResource PrimaryButton}"
+                        Click="FinishButton_OnClick">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="0 0" VerticalAlignment="Center">
+                            Завершить
+                        </TextBlock>
+                        <materialDesign:PackIcon Kind="Check" Margin="8 0 0 0" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

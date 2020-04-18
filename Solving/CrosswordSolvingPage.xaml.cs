@@ -200,16 +200,14 @@ namespace CrosswordApp
 
         void FinishButton_Click(object sender, RoutedEventArgs e)
         {
-            var solvedWords = SolvedWords;
-            if (solvedWords == crossword.words.Count)
-            {
-                MessageBox.Show("Вы правильно решили кроссворд!");
-            }
-            else
-            {
-                MessageBox.Show(
-                    $"К сожалению, Вы отгадали только {solvedWords} из {crossword.words.Count} слов. Попробуйте еще раз.");
-            }
+            var messageBoxResult = System.Windows.MessageBox.Show(
+                "Вы уверены, что хотите закончить прохождение кроссворда?",
+                "Завершение прохождения",
+                System.Windows.MessageBoxButton.YesNo);
+            if (messageBoxResult != MessageBoxResult.Yes)
+                return;
+
+            (Parent as MainWindow).Content = new SolvingResultPage();
         }
 
         int SolvedWords
