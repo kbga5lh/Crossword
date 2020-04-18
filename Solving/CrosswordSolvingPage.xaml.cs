@@ -207,7 +207,7 @@ namespace CrosswordApp
             if (messageBoxResult != MessageBoxResult.Yes)
                 return;
 
-            (Parent as MainWindow).Content = new SolvingResultPage();
+            (Parent as MainWindow).Content = new SolvingResultPage(crossword, GetEnteredLetters());
         }
 
         int SolvedWords
@@ -215,19 +215,7 @@ namespace CrosswordApp
             get
             {
                 var result = 0;
-                var size = crossword.Size;
-
-                var cells = new char[size.x, size.y];
-                foreach (var letterTextBox in CrosswordGrid.Children)
-                {
-                    if (!(letterTextBox is TextBox tb))
-                        continue;
-                    var x = (int) tb.GetValue(Grid.ColumnProperty);
-                    var y = (int) tb.GetValue(Grid.RowProperty);
-                    if (tb.Text.Length < 1)
-                        continue;
-                    cells[x, y] = tb.Text.ToLower()[0];
-                }
+                var cells = GetEnteredLetters();
 
                 foreach (var placement in crossword.placements)
                 {
@@ -239,7 +227,7 @@ namespace CrosswordApp
                             (int x, int y) pos = (placement.x + i, placement.y + j);
                             var c1 = cells[pos.x, pos.y];
                             var c2 = crossword.words[placement.wordIndex].word[placement.isVertical ? j : i];
-                            if (Correct(c1) != Correct(c2))
+                            if (c1 != Correct(c2))
                             {
                                 solvedCorrectly = false;
                             }
@@ -252,6 +240,25 @@ namespace CrosswordApp
 
                 return result;
             }
+        }
+
+        char[,] GetEnteredLetters()
+        {
+            var size = crossword.Size;
+
+            var cells = new char[size.x, size.y];
+            foreach (var letterTextBox in CrosswordGrid.Children)
+            {
+                if (!(letterTextBox is TextBox tb))
+                    continue;
+                var x = (int) tb.GetValue(Grid.ColumnProperty);
+                var y = (int) tb.GetValue(Grid.RowProperty);
+                if (tb.Text.Length < 1)
+                    continue;
+                cells[x, y] = Correct(tb.Text.ToLower()[0]);
+            }
+
+            return cells;
         }
 
         char Correct(char initial)
