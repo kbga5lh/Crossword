@@ -104,6 +104,7 @@
                         <CheckBox x:Name="ShowLettersCheckBox"
                                   Margin="8 0 8 0"
                                   Grid.Column="1"
+                                  IsChecked="True"
                                   Checked="ShowLettersCheckBox_Checked"
                                   Unchecked="ShowLettersCheckBox_Unchecked"
                                   Style="{DynamicResource MaterialDesignSwitchToggleButton}" />

@@ -20,6 +20,8 @@
             <Brush x:Key="LightGrayColor">#F5F5F5</Brush>
             <Brush x:Key="DarkGrayColor">#E5E5E5</Brush>
 
+            <Image x:Key="Logo" Source="Images/logo.png" />
+
             <FontFamily x:Key="Montserrat">pack://application:,,,/Fonts/#Montserrat</FontFamily>
 
             <Style x:Key="ErrorText" TargetType="TextBlock">

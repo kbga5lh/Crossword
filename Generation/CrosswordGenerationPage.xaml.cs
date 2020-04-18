@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using CrosswordGenerator;
 using Newtonsoft.Json;
 
 namespace CrosswordApp
@@ -47,8 +46,6 @@ namespace CrosswordApp
 
             var unusedWords = crosswordGenerator.words.Count - crossword.placements.Count;
             UnusedWordsTextBox.Text = unusedWords.ToString();
-
-            // OutputTextBox.Text = crossword.GetDefinitionsString();
         }
 
         void FillGrid(int cellSize)

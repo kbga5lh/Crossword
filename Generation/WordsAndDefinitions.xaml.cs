@@ -10,7 +10,7 @@ namespace CrosswordApp
         public int Count => WordsStackPanel.Children.Count;
 
         public event EventHandler CountChange;
-        
+
         public WordsAndDefinitions()
         {
             InitializeComponent();
@@ -36,6 +36,7 @@ namespace CrosswordApp
                 {
                     (WordsStackPanel.Children[i] as WordAndDefinition).Index.Text = (i + 1).ToString();
                 }
+
                 CountChange?.Invoke(this, EventArgs.Empty);
             };
             WordsStackPanel.Children.Add(wd);
@@ -60,6 +61,7 @@ namespace CrosswordApp
                     AddWordAndDefinition();
                 }
             }
+
             CountChange?.Invoke(this, EventArgs.Empty);
         }
     }

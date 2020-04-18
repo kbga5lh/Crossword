@@ -5,7 +5,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using CrosswordGenerator;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 
@@ -56,12 +55,14 @@ namespace CrosswordApp
                     wd.WordTextBox.Focus();
                     return null;
                 }
+
                 if (string.IsNullOrEmpty(wd.DefinitionTextBox.Text))
                 {
                     MessageBox.Show("Не все поля заполнены!");
                     wd.DefinitionTextBox.Focus();
                     return null;
                 }
+
                 list.Add((wd.WordTextBox.Text, wd.DefinitionTextBox.Text));
             }
 
@@ -72,7 +73,7 @@ namespace CrosswordApp
         {
             var jsonWords = JsonConvert.DeserializeObject(File.ReadAllText(path)) as Newtonsoft.Json.Linq.JArray;
             var words = jsonWords
-                .Select(p => ((string)p["Item1"], (string)p["Item2"]))
+                .Select(p => ((string) p["Item1"], (string) p["Item2"]))
                 .ToList();
             return words;
         }

@@ -36,6 +36,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Logo.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MaterialDesignColors, Version=1.2.3.1244, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\MaterialDesignColors.1.2.3\lib\net45\MaterialDesignColors.dll</HintPath>
@@ -67,9 +70,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ConfirmationDialog.xaml.cs">
-      <DependentUpon>ConfirmationDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Crossword.cs" />
     <Compile Include="Generation\CrosswordGenerationPage.xaml.cs">
       <DependentUpon>CrosswordGenerationPage.xaml</DependentUpon>
@@ -92,7 +92,6 @@
     <Compile Include="Solving\CrosswordSolvingPage.xaml.cs">
       <DependentUpon>CrosswordSolvingPage.xaml</DependentUpon>
     </Compile>
-    <Page Include="ConfirmationDialog.xaml" />
     <Page Include="Generation\CrosswordGenerationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -158,6 +157,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="LogoSquareBlack.ico" />
+    <Resource Include="Logo.ico" />
     <Content Include="TestData\Кроссворд_ТРПО(30).json" />
     <Content Include="TestData\Кроссворд_Фрукты(3).json" />
     <Content Include="TestData\Слова_ТРПО(30).json" />

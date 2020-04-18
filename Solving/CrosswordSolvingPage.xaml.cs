@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using CrosswordGenerator;
 
 namespace CrosswordApp
 {
@@ -37,11 +36,13 @@ namespace CrosswordApp
             {
                 if (placement.isVertical)
                 {
-                    DefinitionsVerticalTextBlock.Text += $"{placement.index} - {crossword.words[placement.wordIndex].definition}\n\n";
+                    DefinitionsVerticalTextBlock.Text +=
+                        $"{placement.index} - {crossword.words[placement.wordIndex].definition}\n\n";
                 }
                 else
                 {
-                    DefinitionsHorizontalTextBlock.Text += $"{placement.index} - {crossword.words[placement.wordIndex].definition}\n\n";
+                    DefinitionsHorizontalTextBlock.Text +=
+                        $"{placement.index} - {crossword.words[placement.wordIndex].definition}\n\n";
                 }
             }
         }
@@ -97,6 +98,7 @@ namespace CrosswordApp
                                 else
                                     ++k;
                             }
+
                             if (formattedText != tb.Text)
                             {
                                 tb.Text = formattedText;
@@ -118,8 +120,8 @@ namespace CrosswordApp
                         a.PreviewKeyDown += (sender, args) =>
                         {
                             if (!(sender is TextBox tb)) return;
-                            var x = (int)tb.GetValue(Grid.ColumnProperty);
-                            var y = (int)tb.GetValue(Grid.RowProperty);
+                            var x = (int) tb.GetValue(Grid.ColumnProperty);
+                            var y = (int) tb.GetValue(Grid.RowProperty);
                             var x1 = x;
                             var y1 = y;
                             switch (args.Key)
@@ -147,8 +149,8 @@ namespace CrosswordApp
                             foreach (var t in CrosswordGrid.Children)
                             {
                                 if (!(t is TextBox textBox)) continue;
-                                var tx = (int)textBox.GetValue(Grid.ColumnProperty);
-                                var ty = (int)textBox.GetValue(Grid.RowProperty);
+                                var tx = (int) textBox.GetValue(Grid.ColumnProperty);
+                                var ty = (int) textBox.GetValue(Grid.RowProperty);
                                 if (tx != x1 || ty != y1) continue;
                                 tb1 = textBox;
                                 break;
@@ -191,7 +193,7 @@ namespace CrosswordApp
                 System.Windows.MessageBoxButton.YesNo);
             if (messageBoxResult != MessageBoxResult.Yes)
                 return;
-            
+
             (Parent as MainWindow).Content = new MainMenuPage();
         }
 
@@ -204,7 +206,8 @@ namespace CrosswordApp
             }
             else
             {
-                MessageBox.Show($"К сожалению, Вы отгадали только {solvedWords} из {crossword.words.Count} слов. Попробуйте еще раз.");
+                MessageBox.Show(
+                    $"К сожалению, Вы отгадали только {solvedWords} из {crossword.words.Count} слов. Попробуйте еще раз.");
             }
         }
 
@@ -242,6 +245,7 @@ namespace CrosswordApp
                             }
                         }
                     }
+
                     if (solvedCorrectly)
                         result++;
                 }

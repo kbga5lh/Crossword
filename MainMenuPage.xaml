@@ -4,24 +4,147 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:CrosswordApp"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d"
       Title="MainMenuPage"
-      Background="{StaticResource LightGrayColor}">
-      <StackPanel Orientation="Vertical"
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Center">
+      Background="White">
+    <Grid Width="Auto">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <StackPanel HorizontalAlignment="Center"
+                    Orientation="Horizontal"
+                    Margin="40">
+            <Image Source="LogoSquareBlack.ico"
+                   Margin="0 0 8 0"
+                   Height="48"
+                   Width="48" />
+            <TextBlock Margin="8 0 0 0"
+                       FontWeight="Black"
+                       FontSize="48">
+                CROSS
+            </TextBlock>
+            <TextBlock Margin="0 0 0 0"
+                       FontWeight="Black"
+                       FontSize="48"
+                       Foreground="{StaticResource MainColor}">
+                WORD
+            </TextBlock>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical"
+                    Grid.Row="1"
+                    Width="400"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
             <Button x:Name="SolveCrosswordButton"
                     Style="{StaticResource PrimaryButton}"
                     Click="SolveCrosswordButton_OnClick"
-                    Margin="8">
-                  Решить кроссворд
+                    Margin="8"
+                    FontSize="16"
+                    Height="48"
+                    HorizontalAlignment="Stretch">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Margin="0 0 8 0"
+                               Width="300"
+                               VerticalAlignment="Center">
+                        Решить кроссворд
+                    </TextBlock>
+
+                    <Ellipse Grid.Column="1"
+                             Margin="8 0 0 0"
+                             Width="24"
+                             Height="24"
+                             VerticalAlignment="Center"
+                             Fill="{StaticResource DarkTextColor}" />
+
+                    <materialDesign:PackIcon Kind="ChevronRight"
+                                             Grid.Column="1"
+                                             Margin="8 0 0 0"
+                                             Width="24"
+                                             Height="24"
+                                             VerticalAlignment="Center"
+                                             Foreground="{StaticResource MainColor}" />
+                </Grid>
             </Button>
-            
+
             <Button x:Name="GenerateCrosswordButton"
-                    Style="{StaticResource SecondaryButton}"
                     Click="GenerateCrosswordButton_OnClick"
-                    Margin="8">
-                  Создать кроссворд
+                    Margin="8"
+                    Foreground="White"
+                    Height="48"
+                    FontSize="16"
+                    FontWeight="Bold"
+                    HorizontalAlignment="Stretch">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Margin="0 0 8 0"
+                               Width="300"
+                               VerticalAlignment="Center">
+                        Создать кроссворд
+                    </TextBlock>
+
+                    <Ellipse Grid.Column="1"
+                             Margin="8 0 0 0"
+                             Width="24"
+                             Height="24"
+                             VerticalAlignment="Center"
+                             Fill="White" />
+
+                    <materialDesign:PackIcon Kind="ChevronRight"
+                                             Grid.Column="1"
+                                             Margin="8 0 0 0"
+                                             Width="24"
+                                             Height="24"
+                                             VerticalAlignment="Center"
+                                             Foreground="{StaticResource DarkTextColor}" />
+                </Grid>
+
+                <Button.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="{StaticResource DarkTextColor}" />
+                        <Setter Property="SnapsToDevicePixels" Value="True" />
+
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border CornerRadius="4" Background="{TemplateBinding Background}"
+                                            Width="{TemplateBinding Width}">
+                                        <TextBlock TextAlignment="Center"
+                                                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                   Padding="8, 0"
+                                                   Foreground="{TemplateBinding Foreground}"
+                                                   FontSize="{TemplateBinding FontSize}">
+                                            <ContentPresenter Content="{TemplateBinding Content}" />
+                                        </TextBlock>
+                                    </Border>
+
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#353535" />
+                                            <Setter Property="Cursor" Value="Hand" />
+                                        </Trigger>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Background" Value="{StaticResource IntermediateColor}" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Resources>
             </Button>
-      </StackPanel>
+        </StackPanel>
+    </Grid>
 </Page>
