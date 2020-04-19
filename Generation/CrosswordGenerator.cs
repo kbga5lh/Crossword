@@ -1,28 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.IO;
 using System.Windows;
-using System.Windows.Media.Imaging;
-using Brushes = System.Drawing.Brushes;
-using Color = System.Drawing.Color;
-using Point = System.Windows.Point;
 
 namespace CrosswordApp
 {
     internal class CrosswordGenerator
     {
         static readonly Random rng = new Random();
+        public string name = "Crossword";
 
         public List<(string word, string definition)> words;
-        public string name = "Crossword";
 
         public Crossword Generate()
         {
             var result = new Crossword
             {
-                name = name,
+                name = name
             };
 
             Shuffle(words);
@@ -54,13 +47,14 @@ namespace CrosswordApp
             var i = 1;
             foreach (var placement in wordPlacements)
             {
-                var samePlacementPos = result.placements.FindIndex(v => v.x == placement.x - minX && v.y == placement.y - minY);
+                var samePlacementPos =
+                    result.placements.FindIndex(v => v.x == placement.x - minX && v.y == placement.y - minY);
                 var p = new Crossword.Placement
                 {
                     x = placement.x - minX,
                     y = placement.y - minY,
                     isVertical = placement.isVertical,
-                    index = samePlacementPos >= 0 ? (result.placements[samePlacementPos].index) : i++,
+                    index = samePlacementPos >= 0 ? result.placements[samePlacementPos].index : i++
                 };
 
                 result.words.Add(words[placement.wordIndex]);
@@ -86,7 +80,9 @@ namespace CrosswordApp
                 for (var i = 0; i < result.Count; i++)
                 {
                     var placement = result[i];
-                    for (var charInPlacementIndex = 0; charInPlacementIndex < placement.wordLength; charInPlacementIndex++)
+                    for (var charInPlacementIndex = 0;
+                        charInPlacementIndex < placement.wordLength;
+                        charInPlacementIndex++)
                     {
                         var charInPlacement = words[placement.wordIndex].word[charInPlacementIndex];
                         for (var charInWordIndex = 0; charInWordIndex < words[wordIndex].word.Length; charInWordIndex++)
@@ -98,7 +94,7 @@ namespace CrosswordApp
                             {
                                 wordIndex = wordIndex,
                                 isVertical = !placement.isVertical,
-                                wordLength = words[wordIndex].word.Length,
+                                wordLength = words[wordIndex].word.Length
                             };
                             if (placement.isVertical)
                             {
@@ -140,7 +136,10 @@ namespace CrosswordApp
                         return false;
                 }
                 else if (IsCloseTo(p, placement))
+                {
                     return false;
+                }
+
                 if (!IsIntersectionRight(p, placement))
                     return false;
             }
@@ -151,14 +150,13 @@ namespace CrosswordApp
         bool IsIntersectionRight(Crossword.Placement placement, Crossword.Placement other)
         {
             for (var i = 0; i < placement.wordLength; ++i)
+            for (var j = 0; j < other.wordLength; ++j)
             {
-                for (var j = 0; j < other.wordLength; ++j)
-                {
-                    var p1 = new Point(placement.x + (placement.isVertical ? 0 : i), placement.y + (placement.isVertical ? i : 0));
-                    var p2 = new Point(other.x + (other.isVertical ? 0 : j), other.y + (other.isVertical ? j : 0));
-                    if (p1 == p2 && words[placement.wordIndex].word[i] != words[other.wordIndex].word[j])
-                        return false;
-                }
+                var p1 = new Point(placement.x + (placement.isVertical ? 0 : i),
+                    placement.y + (placement.isVertical ? i : 0));
+                var p2 = new Point(other.x + (other.isVertical ? 0 : j), other.y + (other.isVertical ? j : 0));
+                if (p1 == p2 && words[placement.wordIndex].word[i] != words[other.wordIndex].word[j])
+                    return false;
             }
 
             return true;
@@ -166,7 +164,8 @@ namespace CrosswordApp
 
         public bool IsCloseTo(Crossword.Placement placement, Crossword.Placement other)
         {
-            return IntersectsWith(new Rect(placement.x - 1, placement.y - 1, placement.Width + 2, placement.Height + 2), other.Rect);
+            return IntersectsWith(new Rect(placement.x - 1, placement.y - 1, placement.Width + 2, placement.Height + 2),
+                other.Rect);
         }
 
         static bool IntersectsWith(Rect r1, Rect r2)

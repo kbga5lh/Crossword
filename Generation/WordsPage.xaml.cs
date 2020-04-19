@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.Win32;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace CrosswordApp
 {
@@ -25,9 +26,9 @@ namespace CrosswordApp
 
         void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            var messageBoxResult = System.Windows.MessageBox.Show(
+            var messageBoxResult = MessageBox.Show(
                 "Вы уверены, что хотите вернуться в меню? Все несохраненные изменения пропадут.", "Выход в меню",
-                System.Windows.MessageBoxButton.YesNo);
+                MessageBoxButton.YesNo);
             if (messageBoxResult != MessageBoxResult.Yes)
                 return;
 
@@ -71,7 +72,7 @@ namespace CrosswordApp
 
         static List<(string, string)> ReadFromFile(string path)
         {
-            var jsonWords = JsonConvert.DeserializeObject(File.ReadAllText(path)) as Newtonsoft.Json.Linq.JArray;
+            var jsonWords = JsonConvert.DeserializeObject(File.ReadAllText(path)) as JArray;
             var words = jsonWords
                 .Select(p => ((string) p["Item1"], (string) p["Item2"]))
                 .ToList();
@@ -147,7 +148,9 @@ namespace CrosswordApp
                 WordsAmountTextBox.SelectionStart = WordsAmountTextBox.Text.Length;
             }
             else
+            {
                 WordsAndDefinitionsElement.Resize(wordsAmount);
+            }
         }
 
         void WordsAmountTextBox_OnLostFocus(object sender, RoutedEventArgs e)

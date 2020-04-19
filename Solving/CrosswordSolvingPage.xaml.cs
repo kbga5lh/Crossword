@@ -1,26 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CrosswordApp
 {
     /// <summary>
-    /// Логика взаимодействия для CrosswordSolvingPage.xaml
+    ///     Логика взаимодействия для CrosswordSolvingPage.xaml
     /// </summary>
     public partial class CrosswordSolvingPage : Page
     {
         Crossword crossword;
+
+        readonly Stopwatch stopwatch;
 
         public CrosswordSolvingPage(Crossword crossword)
         {
@@ -33,18 +26,15 @@ namespace CrosswordApp
             CrosswordNameTextBlock.Text = this.crossword.name;
 
             foreach (var placement in crossword.placements)
-            {
                 if (placement.isVertical)
-                {
                     DefinitionsVerticalTextBlock.Text +=
                         $"{placement.index} - {crossword.words[placement.wordIndex].definition}\n\n";
-                }
                 else
-                {
                     DefinitionsHorizontalTextBlock.Text +=
                         $"{placement.index} - {crossword.words[placement.wordIndex].definition}\n\n";
-                }
-            }
+
+            stopwatch = new Stopwatch();
+            stopwatch.Start();
         }
 
         void FillGrid(int cellSize)
@@ -63,111 +53,111 @@ namespace CrosswordApp
             foreach (var placement in crossword.placements)
             {
                 for (var i = 0; i < placement.Width; ++i)
+                for (var j = 0; j < placement.Height; ++j)
                 {
-                    for (var j = 0; j < placement.Height; ++j)
+                    (int x, int y) pos = (placement.x + i, placement.y + j);
+                    if (cells[pos.x, pos.y])
+                        continue;
+
+                    var a = new TextBox
                     {
-                        (int x, int y) pos = (placement.x + i, placement.y + j);
-                        if (cells[pos.x, pos.y])
-                            continue;
+                        VerticalContentAlignment = VerticalAlignment.Center,
+                        HorizontalContentAlignment = HorizontalAlignment.Center,
+                        Style = Resources["CrosswordLetterTextBox"] as Style,
+                        Background = new SolidColorBrush(Color.FromRgb(44, 44, 44)),
+                        BorderThickness = new Thickness(0.5),
+                        BorderBrush = Brushes.White,
+                        Foreground = Brushes.White,
+                        FontWeight = FontWeights.SemiBold
+                    };
+                    a.TextChanged += (sender, args) =>
+                    {
+                        if (!(sender is TextBox tb)) return;
+                        var selectionStart = tb.SelectionStart;
 
-                        var a = new TextBox
+                        var formattedText = tb.Text.ToLower();
+                        for (var k = 0; k < formattedText.Length;)
                         {
-                            VerticalContentAlignment = VerticalAlignment.Center,
-                            HorizontalContentAlignment = HorizontalAlignment.Center,
-                            Style = Resources["CrosswordLetterTextBox"] as Style,
-                            Background = new SolidColorBrush(Color.FromRgb(44, 44, 44)),
-                            BorderThickness = new Thickness(0.5),
-                            BorderBrush = Brushes.White,
-                            Foreground = Brushes.White,
-                            FontWeight = FontWeights.SemiBold,
-                        };
-                        a.TextChanged += (sender, args) =>
-                        {
-                            if (!(sender is TextBox tb)) return;
-                            var selectionStart = tb.SelectionStart;
-
-                            var formattedText = tb.Text.ToLower();
-                            for (var k = 0; k < formattedText.Length;)
+                            var ch = formattedText[k];
+                            if (ch < 'а' || ch > 'я')
                             {
-                                var ch = formattedText[k];
-                                if (ch < 'а' || ch > 'я')
-                                {
-                                    formattedText = formattedText.Remove(k, 1);
-                                    if (k < selectionStart)
-                                        --selectionStart;
-                                }
-                                else
-                                    ++k;
+                                formattedText = formattedText.Remove(k, 1);
+                                if (k < selectionStart)
+                                    --selectionStart;
                             }
-
-                            if (formattedText != tb.Text)
+                            else
                             {
-                                tb.Text = formattedText;
-                                tb.SelectionStart = selectionStart;
+                                ++k;
                             }
-                        };
-                        a.GotFocus += (sender, args) =>
-                        {
-                            if (!(sender is TextBox tb)) return;
-                            tb.SelectAll();
-                        };
-                        a.PreviewMouseLeftButtonDown += (sender, args) =>
-                        {
-                            if (!(sender is TextBox tb)) return;
-                            if (tb.IsKeyboardFocusWithin) return;
-                            args.Handled = true;
-                            tb.Focus();
-                        };
-                        a.PreviewKeyDown += (sender, args) =>
-                        {
-                            if (!(sender is TextBox tb)) return;
-                            var x = (int) tb.GetValue(Grid.ColumnProperty);
-                            var y = (int) tb.GetValue(Grid.RowProperty);
-                            var x1 = x;
-                            var y1 = y;
-                            switch (args.Key)
-                            {
-                                case Key.Left:
-                                    x1--;
-                                    break;
-                                case Key.Right:
-                                    x1++;
-                                    break;
-                                case Key.Up:
-                                    y1--;
-                                    break;
-                                case Key.Down:
-                                    y1++;
-                                    break;
-                                case Key.Tab:
-                                    args.Handled = true;
-                                    return;
-                                default:
-                                    return;
-                            }
+                        }
 
-                            TextBox tb1 = null;
-                            foreach (var t in CrosswordGrid.Children)
-                            {
-                                if (!(t is TextBox textBox)) continue;
-                                var tx = (int) textBox.GetValue(Grid.ColumnProperty);
-                                var ty = (int) textBox.GetValue(Grid.RowProperty);
-                                if (tx != x1 || ty != y1) continue;
-                                tb1 = textBox;
+                        if (formattedText != tb.Text)
+                        {
+                            tb.Text = formattedText;
+                            tb.SelectionStart = selectionStart;
+                        }
+                    };
+                    a.GotFocus += (sender, args) =>
+                    {
+                        if (!(sender is TextBox tb)) return;
+                        tb.SelectAll();
+                    };
+                    a.PreviewMouseLeftButtonDown += (sender, args) =>
+                    {
+                        if (!(sender is TextBox tb)) return;
+                        if (tb.IsKeyboardFocusWithin) return;
+                        args.Handled = true;
+                        tb.Focus();
+                    };
+                    a.PreviewKeyDown += (sender, args) =>
+                    {
+                        if (!(sender is TextBox tb)) return;
+                        var x = (int) tb.GetValue(Grid.ColumnProperty);
+                        var y = (int) tb.GetValue(Grid.RowProperty);
+                        var x1 = x;
+                        var y1 = y;
+                        switch (args.Key)
+                        {
+                            case Key.Left:
+                                x1--;
                                 break;
-                            }
+                            case Key.Right:
+                                x1++;
+                                break;
+                            case Key.Up:
+                                y1--;
+                                break;
+                            case Key.Down:
+                                y1++;
+                                break;
+                            case Key.Tab:
+                                args.Handled = true;
+                                return;
+                            default:
+                                return;
+                        }
 
-                            args.Handled = true;
-                            tb1?.Focus();
-                        };
-                        a.MaxLength = 1;
+                        TextBox tb1 = null;
+                        foreach (var t in CrosswordGrid.Children)
+                        {
+                            if (!(t is TextBox textBox)) continue;
+                            var tx = (int) textBox.GetValue(Grid.ColumnProperty);
+                            var ty = (int) textBox.GetValue(Grid.RowProperty);
+                            if (tx != x1 || ty != y1) continue;
+                            tb1 = textBox;
+                            break;
+                        }
 
-                        a.SetValue(Grid.RowProperty, pos.y);
-                        a.SetValue(Grid.ColumnProperty, pos.x);
-                        CrosswordGrid.Children.Add(a);
+                        args.Handled = true;
+                        tb1?.Focus();
+                    };
+                    a.MaxLength = 1;
 
-                        cells[pos.x, pos.y] = true;
-                    }
+                    a.SetValue(Grid.RowProperty, pos.y);
+                    a.SetValue(Grid.ColumnProperty, pos.x);
+                    CrosswordGrid.Children.Add(a);
+
+                    cells[pos.x, pos.y] = true;
                 }
 
                 var b = new TextBlock
@@ -178,7 +168,7 @@ namespace CrosswordApp
                     Margin = new Thickness(2, 2, 0, 0),
                     FontSize = 7,
                     IsHitTestVisible = false,
-                    Foreground = Brushes.White,
+                    Foreground = Brushes.White
                 };
                 b.SetValue(Grid.RowProperty, placement.y);
                 b.SetValue(Grid.ColumnProperty, placement.x);
@@ -188,10 +178,10 @@ namespace CrosswordApp
 
         void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            var messageBoxResult = System.Windows.MessageBox.Show(
+            var messageBoxResult = MessageBox.Show(
                 "Вы уверены, что хотите вернуться в меню? Ваш прогресс в этом кроссворде не сохранится.",
                 "Выход в меню",
-                System.Windows.MessageBoxButton.YesNo);
+                MessageBoxButton.YesNo);
             if (messageBoxResult != MessageBoxResult.Yes)
                 return;
 
@@ -200,14 +190,15 @@ namespace CrosswordApp
 
         void FinishButton_Click(object sender, RoutedEventArgs e)
         {
-            var messageBoxResult = System.Windows.MessageBox.Show(
+            var messageBoxResult = MessageBox.Show(
                 "Вы уверены, что хотите закончить прохождение кроссворда?",
                 "Завершение прохождения",
-                System.Windows.MessageBoxButton.YesNo);
+                MessageBoxButton.YesNo);
             if (messageBoxResult != MessageBoxResult.Yes)
                 return;
 
-            (Parent as MainWindow).Content = new SolvingResultPage(crossword, GetEnteredLetters());
+            stopwatch.Stop();
+            (Parent as MainWindow).Content = new SolvingResultPage(crossword, GetEnteredLetters(), stopwatch.Elapsed);
         }
 
         char[,] GetEnteredLetters()

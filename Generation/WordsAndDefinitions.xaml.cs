@@ -7,9 +7,6 @@ namespace CrosswordApp
     public partial class WordsAndDefinitions : UserControl
     {
         public const int maxCount = 200;
-        public int Count => WordsStackPanel.Children.Count;
-
-        public event EventHandler CountChange;
 
         public WordsAndDefinitions()
         {
@@ -18,6 +15,10 @@ namespace CrosswordApp
             AddWordAndDefinition();
         }
 
+        public int Count => WordsStackPanel.Children.Count;
+
+        public event EventHandler CountChange;
+
         public void AddWordAndDefinition()
         {
             if (Count >= maxCount)
@@ -25,7 +26,7 @@ namespace CrosswordApp
 
             var wd = new WordAndDefinition();
             wd.Index.Text = (Count + 1).ToString();
-            wd.CloseButton.Click += (object sender, RoutedEventArgs e) =>
+            wd.CloseButton.Click += (sender, e) =>
             {
                 if (WordsStackPanel.Children.Count <= 1)
                     return;
@@ -33,9 +34,7 @@ namespace CrosswordApp
                 WordsStackPanel.Children.Remove(wd);
 
                 for (var i = 0; i < Count; ++i)
-                {
                     (WordsStackPanel.Children[i] as WordAndDefinition).Index.Text = (i + 1).ToString();
-                }
 
                 CountChange?.Invoke(this, EventArgs.Empty);
             };
@@ -43,7 +42,7 @@ namespace CrosswordApp
             CountChange?.Invoke(this, EventArgs.Empty);
         }
 
-        void AddButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        void AddButton_Click(object sender, RoutedEventArgs e)
         {
             AddWordAndDefinition();
         }
@@ -51,16 +50,10 @@ namespace CrosswordApp
         public void Resize(int wordsAmount)
         {
             if (wordsAmount < Count)
-            {
                 WordsStackPanel.Children.RemoveRange(wordsAmount, Count - wordsAmount);
-            }
             else
-            {
                 for (var i = 0; Count < wordsAmount; ++i)
-                {
                     AddWordAndDefinition();
-                }
-            }
 
             CountChange?.Invoke(this, EventArgs.Empty);
         }

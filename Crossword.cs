@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using Newtonsoft.Json;
 
 namespace CrosswordApp
 {
@@ -22,19 +21,16 @@ namespace CrosswordApp
             public int wordLength;
             public bool isVertical;
 
-            [Newtonsoft.Json.JsonIgnore]
-            public int Width => isVertical ? 1 : wordLength;
-            [Newtonsoft.Json.JsonIgnore]
-            public int Height => isVertical ? wordLength : 1;
-            [Newtonsoft.Json.JsonIgnore]
-            public Rect Rect => new Rect(x, y, Width, Height);
+            [JsonIgnore] public int Width => isVertical ? 1 : wordLength;
+            [JsonIgnore] public int Height => isVertical ? wordLength : 1;
+            [JsonIgnore] public Rect Rect => new Rect(x, y, Width, Height);
         }
 
         public string name;
         public List<(string word, string definition)> words;
         public List<Placement> placements;
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public (int x, int y) Size
         {
             get
@@ -46,35 +42,9 @@ namespace CrosswordApp
                     maxX = Math.Max(placement.x + placement.Width, maxX);
                     maxY = Math.Max(placement.y + placement.Height, maxY);
                 }
+
                 return (maxX, maxY);
             }
-        }
-
-        public string GetDefinitionsString()
-        {
-            var result = string.Empty;
-
-            result += "По горизонтали:\n\n";
-
-            for (var i = 0; i < placements.Count; ++i)
-            {
-                if (!placements[i].isVertical)
-                {
-                    result += $"{placements[i].index} - {words[placements[i].wordIndex].definition}\n\n";
-                }
-            }
-
-            result += "По вертикали:\n\n";
-
-            for (var i = 0; i < placements.Count; ++i)
-            {
-                if (placements[i].isVertical)
-                {
-                    result += $"{placements[i].index} - {words[placements[i].wordIndex].definition}\n\n";
-                }
-            }
-
-            return result;
         }
 
         public Bitmap ToImage(bool fillWithWords = true, int cellSize = 48)
@@ -84,29 +54,21 @@ namespace CrosswordApp
             var result = new Bitmap(sizeX * cellSize, sizeY * cellSize);
 
             for (var x = 0; x < sizeX * cellSize; ++x)
-                for (var y = 0; y < sizeY * cellSize; ++y)
-                    result.SetPixel(x, y, Color.FromArgb(20, 20, 20));
+            for (var y = 0; y < sizeY * cellSize; ++y)
+                result.SetPixel(x, y, Color.FromArgb(20, 20, 20));
 
             foreach (var placement in placements)
-            {
                 for (var x = placement.x; x < placement.x + placement.Width; ++x)
+                for (var y = placement.y; y < placement.y + placement.Height; ++y)
                 {
-                    for (var y = placement.y; y < placement.y + placement.Height; ++y)
-                    {
-                        DrawCell(cellSize, result, x, y);
-                        if (fillWithWords)
-                        {
-                            DrawChar(cellSize, result, x, y,
-                                words[placement.wordIndex].word[placement.isVertical ? y - placement.y : x - placement.x]);
-                        }
-                    }
+                    DrawCell(cellSize, result, x, y);
+                    if (fillWithWords)
+                        DrawChar(cellSize, result, x, y,
+                            words[placement.wordIndex].word[placement.isVertical ? y - placement.y : x - placement.x]);
                 }
-            }
 
             foreach (var placement in placements)
-            {
                 DrawIndex(cellSize, result, placement.x, placement.y, placement.index);
-            }
 
             return result;
         }
@@ -114,13 +76,9 @@ namespace CrosswordApp
         static void DrawCell(int cellSize, Bitmap result, int x, int y)
         {
             for (var i = 1; i < cellSize - 1; ++i)
-            {
-                for (var j = 1; j < cellSize - 1; ++j)
-                {
-                    result.SetPixel(x * cellSize + i, y * cellSize + j,
-                        Color.FromArgb(255, 255, 255));
-                }
-            }
+            for (var j = 1; j < cellSize - 1; ++j)
+                result.SetPixel(x * cellSize + i, y * cellSize + j,
+                    Color.FromArgb(255, 255, 255));
         }
 
         static void DrawIndex(int cellSize, Bitmap result, int x, int y, int index)
@@ -135,7 +93,6 @@ namespace CrosswordApp
             g.DrawString(index.ToString(), new Font("Tahoma", 8), Brushes.Black, rectf);
 
             g.Flush();
-
         }
 
         static void DrawChar(int cellSize, Bitmap result, int x, int y, char ch)
@@ -158,7 +115,7 @@ namespace CrosswordApp
         public static BitmapImage ConvertToBitmapImage(Bitmap src)
         {
             var ms = new MemoryStream();
-            src.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+            src.Save(ms, ImageFormat.Bmp);
             var image = new BitmapImage();
             image.BeginInit();
             ms.Seek(0, SeekOrigin.Begin);

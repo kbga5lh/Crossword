@@ -77,20 +77,26 @@
                                Margin="0 8"
                                Background="{StaticResource LightGrayColor}" />
 
-                    <TextBlock FontWeight="Bold"
-                               Margin="0 8">
-                        Результаты
-                    </TextBlock>
-
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="0 8 16 8"
-                                   TextWrapping="Wrap">
+                                   TextWrapping="Wrap"
+                                   FontWeight="Bold">
                             Отгадано слов:
                         </TextBlock>
                         <TextBlock x:Name="RightWordsTextBlock"
                                    Margin="0 8"
+                                   TextWrapping="Wrap" />
+                    </StackPanel>
+                    
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="0 8 16 8"
                                    TextWrapping="Wrap"
-                                   FontWeight="Bold" />
+                                   FontWeight="Bold">
+                            Потрачено времени:
+                        </TextBlock>
+                        <TextBlock x:Name="ElapsedTimeTextBlock"
+                                   Margin="0 8"
+                                   TextWrapping="Wrap" />
                     </StackPanel>
                 </StackPanel>
             </ScrollViewer>

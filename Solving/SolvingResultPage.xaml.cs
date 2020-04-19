@@ -1,3 +1,4 @@
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -7,9 +8,9 @@ namespace CrosswordApp
     public partial class SolvingResultPage : Page
     {
         Crossword crossword;
-        char[,] enteredLetters;
+        readonly char[,] enteredLetters;
 
-        public SolvingResultPage(Crossword crossword, char[,] enteredLetters)
+        public SolvingResultPage(Crossword crossword, char[,] enteredLetters, TimeSpan elapsedTime)
         {
             InitializeComponent();
 
@@ -18,17 +19,45 @@ namespace CrosswordApp
 
             CrosswordNameTextBlock.Text = this.crossword.name;
             var solvedWords = SolvedWords;
-            RightWordsTextBlock.Text = $"{solvedWords} ({(double)solvedWords / (double)crossword.words.Count * 100}%)";
-            
+            RightWordsTextBlock.Text =
+                $"{solvedWords} из {crossword.words.Count} ({Math.Round(solvedWords / (double) crossword.words.Count * 100, 2)}%)";
+            ElapsedTimeTextBlock.Text = elapsedTime.ToString("hh':'mm':'ss");
+
             FillGrid(24);
+        }
+
+        int SolvedWords
+        {
+            get
+            {
+                var result = 0;
+
+                foreach (var placement in crossword.placements)
+                {
+                    var solvedCorrectly = true;
+                    for (var i = 0; i < placement.Width && solvedCorrectly; ++i)
+                    for (var j = 0; j < placement.Height && solvedCorrectly; ++j)
+                    {
+                        (int x, int y) pos = (placement.x + i, placement.y + j);
+                        var c1 = enteredLetters[pos.x, pos.y];
+                        var c2 = crossword.words[placement.wordIndex].word[placement.isVertical ? j : i];
+                        if (c1 != Correct(c2)) solvedCorrectly = false;
+                    }
+
+                    if (solvedCorrectly)
+                        result++;
+                }
+
+                return result;
+            }
         }
 
         void FinishButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var messageBoxResult = System.Windows.MessageBox.Show(
+            var messageBoxResult = MessageBox.Show(
                 "Вы уверены, что хотите вернуться в меню?",
                 "Выход в меню",
-                System.Windows.MessageBoxButton.YesNo);
+                MessageBoxButton.YesNo);
             if (messageBoxResult != MessageBoxResult.Yes)
                 return;
 
@@ -52,39 +81,37 @@ namespace CrosswordApp
             foreach (var placement in crossword.placements)
             {
                 for (var i = 0; i < placement.Width; ++i)
+                for (var j = 0; j < placement.Height; ++j)
                 {
-                    for (var j = 0; j < placement.Height; ++j)
+                    (int x, int y) pos = (placement.x + i, placement.y + j);
+                    if (cells[pos.x, pos.y])
+                        continue;
+
+                    var isLetterCorrect = enteredLetters[pos.x, pos.y] == rightLetters[pos.x, pos.y];
+
+                    var c = new Border
                     {
-                        (int x, int y) pos = (placement.x + i, placement.y + j);
-                        if (cells[pos.x, pos.y])
-                            continue;
+                        Background = new SolidColorBrush(Color.FromRgb(44, 44, 44)),
+                        BorderThickness = new Thickness(0.5),
+                        BorderBrush = Brushes.White
+                    };
+                    c.SetValue(Grid.RowProperty, pos.y);
+                    c.SetValue(Grid.ColumnProperty, pos.x);
+                    CrosswordGrid.Children.Add(c);
 
-                        var isLetterCorrect = enteredLetters[pos.x, pos.y] == rightLetters[pos.x, pos.y];
+                    var a = new TextBlock
+                    {
+                        Text = crossword.words[placement.wordIndex].word[placement.isVertical ? j : i].ToString(),
+                        VerticalAlignment = VerticalAlignment.Center,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        Foreground = isLetterCorrect ? Brushes.White : new SolidColorBrush(Color.FromRgb(255, 60, 60)),
+                        FontWeight = FontWeights.SemiBold
+                    };
+                    a.SetValue(Grid.RowProperty, pos.y);
+                    a.SetValue(Grid.ColumnProperty, pos.x);
+                    CrosswordGrid.Children.Add(a);
 
-                        var c = new Border
-                        {
-                            Background = new SolidColorBrush(Color.FromRgb(44, 44, 44)),
-                            BorderThickness = new Thickness(0.5),
-                            BorderBrush = Brushes.White,
-                        };
-                        c.SetValue(Grid.RowProperty, pos.y);
-                        c.SetValue(Grid.ColumnProperty, pos.x);
-                        CrosswordGrid.Children.Add(c);
-
-                        var a = new TextBlock
-                        {
-                            Text = crossword.words[placement.wordIndex].word[placement.isVertical ? j : i].ToString(),
-                            VerticalAlignment = VerticalAlignment.Center,
-                            HorizontalAlignment = HorizontalAlignment.Center,
-                            Foreground = isLetterCorrect ? Brushes.White : new SolidColorBrush(Color.FromRgb(255, 60, 60)),
-                            FontWeight = FontWeights.SemiBold,
-                        };
-                        a.SetValue(Grid.RowProperty, pos.y);
-                        a.SetValue(Grid.ColumnProperty, pos.x);
-                        CrosswordGrid.Children.Add(a);
-
-                        cells[pos.x, pos.y] = true;
-                    }
+                    cells[pos.x, pos.y] = true;
                 }
 
                 var b = new TextBlock
@@ -94,68 +121,33 @@ namespace CrosswordApp
                     HorizontalAlignment = HorizontalAlignment.Left,
                     Margin = new Thickness(2, 2, 0, 0),
                     FontSize = 7,
-                    Foreground = Brushes.White,
+                    Foreground = Brushes.White
                 };
                 b.SetValue(Grid.RowProperty, placement.y);
                 b.SetValue(Grid.ColumnProperty, placement.x);
                 CrosswordGrid.Children.Add(b);
             }
         }
-        
+
         char[,] GetRightLetters()
         {
             var size = crossword.Size;
 
             var cells = new char[size.x, size.y];
             foreach (var placement in crossword.placements)
-            {
                 for (var i = 0; i < placement.Width; ++i)
+                for (var j = 0; j < placement.Height; ++j)
                 {
-                    for (var j = 0; j < placement.Height; ++j)
-                    {
-                        (int x, int y) pos = (placement.x + i, placement.y + j);
-                        cells[pos.x, pos.y] = crossword.words[placement.wordIndex].word[placement.isVertical ? j : i];
-                    }
+                    (int x, int y) pos = (placement.x + i, placement.y + j);
+                    cells[pos.x, pos.y] = crossword.words[placement.wordIndex].word[placement.isVertical ? j : i];
                 }
-            }
 
             return cells;
         }
-        
+
         char Correct(char initial)
         {
             return initial == 'ё' ? 'е' : initial;
-        }
-        
-        int SolvedWords
-        {
-            get
-            {
-                var result = 0;
-
-                foreach (var placement in crossword.placements)
-                {
-                    var solvedCorrectly = true;
-                    for (var i = 0; i < placement.Width && solvedCorrectly; ++i)
-                    {
-                        for (var j = 0; j < placement.Height && solvedCorrectly; ++j)
-                        {
-                            (int x, int y) pos = (placement.x + i, placement.y + j);
-                            var c1 = enteredLetters[pos.x, pos.y];
-                            var c2 = crossword.words[placement.wordIndex].word[placement.isVertical ? j : i];
-                            if (c1 != Correct(c2))
-                            {
-                                solvedCorrectly = false;
-                            }
-                        }
-                    }
-
-                    if (solvedCorrectly)
-                        result++;
-                }
-
-                return result;
-            }
         }
     }
 }

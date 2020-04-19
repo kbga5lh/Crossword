@@ -25,7 +25,7 @@ namespace CrosswordApp
             {
                 var fileDialog = new OpenFileDialog
                 {
-                    Filter = "JSON file|*.json",
+                    Filter = "JSON file|*.json"
                 };
                 if (fileDialog.ShowDialog() != true)
                     return;

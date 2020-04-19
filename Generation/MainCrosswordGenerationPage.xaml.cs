@@ -5,11 +5,11 @@ namespace CrosswordApp
     public partial class MainCrosswordGenerationPage : Page
     {
         readonly WordsPage wordsPage = new WordsPage();
-        
+
         public MainCrosswordGenerationPage()
         {
             InitializeComponent();
-            
+
             Content = wordsPage;
         }
 
@@ -17,12 +17,12 @@ namespace CrosswordApp
         {
             Content = wordsPage;
         }
-        
+
         public void ToCrosswordPage(CrosswordPage crosswordPage)
         {
             Content = crosswordPage;
         }
-        
+
         public void ToMenuPage()
         {
             (Parent as MainWindow).Content = new MainMenuPage();
